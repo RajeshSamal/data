@@ -1,0 +1,43 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper
+  PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+	"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="Hkag">
+	
+	<resultMap id="result" type="Hkag">
+	    <result property="hkAchieveGoldId" column="HK_ACHIEVE_GOLD_ID"/>
+	    <result property="memberFirstNames" column="MEMBER_FIRST_NAMES"/>
+	    <result property="memberSurname" column="MEMBER_SURNAME"/>
+	    <result property="emailAddress" column="EMAIL_ADDRESS"/>
+	    <result property="aiaVitalityMemberNumber" column="AIA_VITALITY_MEMBER_NUMBER"/>
+	    <result property="entityReferenceNumber" column="ENTITY_REFERENCE_NUMBER"/>
+	    <result property="languagePreference" column="LANGUAGE_PREFERENCE"/>
+	    <result property="recordStatus" column="RECORD_STATUS"/>
+	    <result property="processDate" column="PROCESS_DATE"/>
+	    <result property="recordId" column="RECORD_ID"/>
+	    
+	    
+    </resultMap>
+	
+    
+
+    <insert id="insert" parameterType="Hkag">
+    INSERT INTO hk_achieve_gold (MEMBER_FIRST_NAMES, MEMBER_SURNAME, EMAIL_ADDRESS,AIA_VITALITY_MEMBER_NUMBER,ENTITY_REFERENCE_NUMBER,LANGUAGE_PREFERENCE,RECORD_STATUS,PROCESS_DATE,RECORD_ID) 
+		VALUES (#{memberFirstNames}, #{memberSurname},#{emailAddress},#{aiaVitalityMemberNumber},#{entityReferenceNumber},#{languagePreference},#{recordStatus},#{processDate},#{recordId});
+      <selectKey keyProperty="hkAchieveGoldId" resultType="int" order="AFTER">
+		<!-- 
+		For mysql
+		select last_insert_id() as hkAchieveGoldId
+		-->
+		<!-- 
+		For mssql
+		SELECT @@identity 
+		-->
+		SELECT @@identity
+	  </selectKey>
+    </insert>
+
+	
+
+</mapper>
