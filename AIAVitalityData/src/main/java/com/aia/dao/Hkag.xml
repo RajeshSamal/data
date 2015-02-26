@@ -12,19 +12,21 @@
 	    <result property="emailAddress" column="EMAIL_ADDRESS"/>
 	    <result property="aiaVitalityMemberNumber" column="AIA_VITALITY_MEMBER_NUMBER"/>
 	    <result property="entityReferenceNumber" column="ENTITY_REFERENCE_NUMBER"/>
+	    <result property="vitalityStatus" column="VITALITY_STATUS"/>
+	    <result property="pointsBalance" column="POINTS_BALANCE"/>
+	    <result property="gender" column="GENDER"/>
+	    <result property="clientId" column="CLIENT_ID"/>
 	    <result property="languagePreference" column="LANGUAGE_PREFERENCE"/>
 	    <result property="recordStatus" column="RECORD_STATUS"/>
 	    <result property="processDate" column="PROCESS_DATE"/>
 	    <result property="recordId" column="RECORD_ID"/>
-	    
-	    
     </resultMap>
 	
     
 
     <insert id="insert" parameterType="Hkag">
-    INSERT INTO hk_achieve_gold (MEMBER_FIRST_NAMES, MEMBER_SURNAME, EMAIL_ADDRESS,AIA_VITALITY_MEMBER_NUMBER,ENTITY_REFERENCE_NUMBER,LANGUAGE_PREFERENCE,RECORD_STATUS,PROCESS_DATE,RECORD_ID) 
-		VALUES (#{memberFirstNames}, #{memberSurname},#{emailAddress},#{aiaVitalityMemberNumber},#{entityReferenceNumber},#{languagePreference},#{recordStatus},#{processDate},#{recordId});
+    INSERT INTO hk_achieve_gold (MEMBER_FIRST_NAMES, MEMBER_SURNAME, EMAIL_ADDRESS,AIA_VITALITY_MEMBER_NUMBER,ENTITY_REFERENCE_NUMBER,VITALITY_STATUS,POINTS_BALANCE,GENDER,CLIENT_ID,LANGUAGE_PREFERENCE,RECORD_STATUS,PROCESS_DATE,RECORD_ID) 
+		VALUES (#{memberFirstNames},#{memberSurname},#{emailAddress},#{aiaVitalityMemberNumber},#{entityReferenceNumber},#{vitalityStatus},#{pointsBalance},#{gender},#{clientId},#{languagePreference},#{recordStatus},#{processDate},#{recordId});
       <selectKey keyProperty="hkAchieveGoldId" resultType="int" order="AFTER">
 		<!-- 
 		For mysql
