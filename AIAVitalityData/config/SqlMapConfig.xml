@@ -13,16 +13,23 @@
 		<environment id="development">
 		  <transactionManager type="JDBC"/>
 			<dataSource type="POOLED">
+			<!-- for mysql -->
 				<property name="driver" value="com.mysql.jdbc.Driver"/>
 				<property name="url" value="jdbc:mysql://localhost:3306/aiadata"/>
 				<property name="username" value="root"/>
 				<property name="password" value=""/>
+				
+				<!-- For mssql -->
+	  <!-- <property name="driver" value="com.microsoft.sqlserver.jdbc.SQLServerDriver"/>
+            <property name="url" value="jdbc:sqlserver://localhost(or name of server):1433;databaseName=yourdbname; catalogName=sameasdbname"/>
+            <property name="username" value="root"/>
+            <property name="password" value="root"/> -->
 			</dataSource>
 	   </environment>
 	</environments>
 	
     <mappers>
-  	   <mapper resource="com/ibatis/data/Hkag.xml"/>
+  	   <mapper resource="com/aia/dao/Hkag.xml"/>
     </mappers>
 
 </configuration>

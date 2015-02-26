@@ -1,6 +1,7 @@
 package com.aia.dao;
 
 import java.io.FileNotFoundException;
+import java.io.FileReader;
 import java.io.IOException;
 import java.io.Reader;
 
@@ -17,8 +18,8 @@ public class IBatisConnectionFactory {
 
 		try {
 
-			String resource = "SqlMapConfig.xml";
-			Reader reader = Resources.getResourceAsReader(resource);
+			String resource = "./config/SqlMapConfig.xml";
+			Reader reader = new FileReader(resource);
 
 			if (sqlSessionFactory == null) {
 				sqlSessionFactory = new SqlSessionFactoryBuilder().build(reader);
