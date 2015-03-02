@@ -1,8 +1,11 @@
 package com.aia.common.utils;
 
+import java.io.BufferedOutputStream;
 import java.io.FileInputStream;
+import java.io.FileOutputStream;
 import java.io.IOException;
 import java.io.InputStream;
+import java.io.OutputStream;
 import java.net.SocketException;
 import java.text.DateFormat;
 import java.text.SimpleDateFormat;
@@ -78,6 +81,29 @@ public class FTPConnect {
 		  }   
 		  return ftpClient;
 		 }  
+	 
+	 public static void retrieveFiles(FTPClient ftpClient, String localDirectory) {
+			FTPFile[] files = null;
+			OutputStream output = null;
+			BufferedOutputStream bos = null;
+			try {
+				ftpClient.setBufferSize(1024 * 1024);
+				ftpClient.enterLocalPassiveMode();
+				files = ftpClient.listFiles();
+				for (FTPFile file : files) {
+					String details = file.getName();
+					output = new FileOutputStream(localDirectory + "/"
+							+ file.getName());
+					ftpClient.retrieveFile(details, output);
+					output.close();
+					output = null;
+				}
+
+			} catch (IOException e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+			}
+		}
 	 
 	 public static void disconnectConn(FTPClient ftpClient)
 	 {

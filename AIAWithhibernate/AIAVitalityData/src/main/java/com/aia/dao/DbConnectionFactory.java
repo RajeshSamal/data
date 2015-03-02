@@ -1,6 +1,8 @@
 package com.aia.dao;
 
 
+import java.io.File;
+
 import org.hibernate.SessionFactory;
 import org.hibernate.cfg.Configuration;
 import org.hibernate.service.ServiceRegistry;
@@ -13,7 +15,8 @@ public class DbConnectionFactory {
 	private static SessionFactory buildSessionFactory() {
 		try {
 			Configuration configuration = new Configuration();
-			configuration.configure("./config/hibernate.cfg.xml");
+			File f = new File("./config/hibernate.cfg.xml"); 
+			configuration.configure(f);
 			serviceRegistry = new ServiceRegistryBuilder().applySettings(
 					configuration.getProperties()).buildServiceRegistry();
 			return configuration.buildSessionFactory(serviceRegistry);

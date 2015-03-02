@@ -44,8 +44,9 @@ public class HkagDAO {
 		for (HKAchieveGold hkag : objectList) {
 			hkag.setRecordStatus(Constants.RECORD_SAVED);
 			hkag.setProcessDate(new Date());
+			hkag.setLastModifiedDate(new Date());
+			hkag.setFileType(Constants.HK_GOLD_ARCHIVE);
 			session.save(hkag);
-			session.getTransaction().commit();
 			if (++count % 50 == 0) {
 				session.flush();
 				session.clear();
@@ -60,6 +61,7 @@ public class HkagDAO {
 
 		Transaction tx = session.beginTransaction();
 		for (HKAchieveGold hkag : objectList) {
+			hkag.setLastModifiedDate(new Date());
 			session.update(hkag);
 			session.getTransaction().commit();
 			if (++count % 50 == 0) {

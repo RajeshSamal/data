@@ -6,11 +6,15 @@ import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
+import javax.persistence.Table;
+
+import com.aia.common.utils.Constants;
 
 /**
  * HkAchieveGold class
  */
 @Entity
+@Table(name="hk_achieve_gold")
 public class HKAchieveGold implements CommonModel {
 
 	@Id
@@ -43,18 +47,12 @@ public class HKAchieveGold implements CommonModel {
 	private String gender;
 	@Column(name="CLIENT_ID")
 	private String clientId;
-	
+	@Column(name="FILE_TYPE")
+	private String fileType;
+	@Column(name="LAST_MODIFIED_DATE")
+	private Date lastModifiedDate;
 
 	public HKAchieveGold() {
-	}
-
-	
-	public int getHKAchieveGoldId() {
-		return this.hkAchieveGoldId;
-	}
-
-	public void setHKAchieveGoldId(int hkAchieveGoldId) {
-		this.hkAchieveGoldId = hkAchieveGoldId;
 	}
 
 	public String getMemberFirstNames() {
@@ -160,5 +158,35 @@ public class HKAchieveGold implements CommonModel {
 	public void setClientId(String clientId) {
 		this.clientId = clientId;
 	}
+	
+	public int getHkAchieveGoldId() {
+		return hkAchieveGoldId;
+	}
+
+
+	public void setHkAchieveGoldId(int hkAchieveGoldId) {
+		this.hkAchieveGoldId = hkAchieveGoldId;
+	}
+
+
+	public String getFileType() {
+		return fileType;
+	}
+
+
+	public void setFileType(String fileType) {
+		this.fileType = fileType;
+	}
+
+
+	public Date getLastModifiedDate() {
+		return lastModifiedDate;
+	}
+
+
+	public void setLastModifiedDate(Date lastModifiedDate) {
+		this.lastModifiedDate = lastModifiedDate;
+	}
+
 
 }

@@ -1,17 +1,15 @@
 package com.aia.data;
 
-import java.io.BufferedOutputStream;
 import java.io.File;
-import java.io.FileInputStream;
 import java.io.FileNotFoundException;
-import java.io.FileOutputStream;
 import java.io.FileReader;
 import java.io.IOException;
 import java.io.InputStream;
-import java.io.OutputStream;
 import java.lang.reflect.InvocationTargetException;
 import java.lang.reflect.Method;
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
+import java.util.Calendar;
 import java.util.Date;
 import java.util.Enumeration;
 import java.util.HashMap;
@@ -21,14 +19,12 @@ import java.util.Map;
 import java.util.Properties;
 
 import org.apache.commons.net.ftp.FTPClient;
-import org.apache.commons.net.ftp.FTPFile;
 import org.apache.log4j.Logger;
 import org.hibernate.Session;
 import org.hibernate.SessionFactory;
 import org.hibernate.Transaction;
 
 import com.aia.common.utils.CSVReader;
-import com.aia.common.utils.Constants;
 import com.aia.common.utils.FTPConnect;
 import com.aia.dao.DbConnectionFactory;
 import com.aia.dao.HkagDAO;
@@ -90,32 +86,11 @@ public class DataInputProcessor {
 		fileMap.put("HK-ACHIEVE_GOLD", HKAchieveGoldColumnMap);
 	}
 
-	private static void retrieveFiles(FTPClient ftpClient) {
-		FTPFile[] files = null;
-		OutputStream output = null;
-		BufferedOutputStream bos = null;
-		try {
-			ftpClient.setBufferSize(1024 * 1024);
-			ftpClient.enterLocalPassiveMode();
-			files = ftpClient.listFiles();
-			for (FTPFile file : files) {
-				String details = file.getName();
-				output = new FileOutputStream(localDirectory + "/"
-						+ file.getName());
-				ftpClient.retrieveFile(details, output);
-				output.close();
-				output = null;
-			}
-
-		} catch (IOException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
-		}
-	}
+	
 
 	private static String getFileNameFromClassName(String fileName) {
 		int lastIndexOfHypen = fileName.lastIndexOf("-");
-		int lastIndexOfSlash = fileName.lastIndexOf("/");
+		int lastIndexOfSlash = fileName.lastIndexOf("\\");
 		String classMapName = fileName.substring(lastIndexOfSlash + 1,
 				lastIndexOfHypen);
 		return classMapName;
@@ -236,25 +211,7 @@ public class DataInputProcessor {
 		return objectList;
 	}
 
-	private static void sendToElqua(List objectList, Class fileClass) {
-		// String className = fileClass.getName();
-		// Class.forName(className).cast(obj);
-		List<CDODetails> cdoDetailsList = new ArrayList<CDODetails>();
-		HKAchieveGold HKAG = null;
-		if (fileClass.getName().equalsIgnoreCase("com.aia.model.HKAchieveGold")) {
-			for (int i = 0; i < objectList.size(); i++) {
-
-				HKAG = (HKAchieveGold) objectList.get(i);
-				CDODetails cdoData = processHKAG(HKAG);
-				cdoDetailsList.add(cdoData);
-			}
-
-		}
-
-		AIAService aiaService = new AIAService();
-		aiaService.syncCDODataToEloqua(cdoDetailsList);
-
-	}
+	
 
 	private static CDODetails processHKAG(CommonModel model) {
 
@@ -274,11 +231,10 @@ public class DataInputProcessor {
 
 	}
 
-	private static void processFiles(String fileName) {
+	private static void processFiles(String fileName,Session session) {
 		Class fileClass = getFileClass(fileName);
 		List recordObjectList = fileToRecordList(fileName, fileClass);
-		saveToDatBase(recordObjectList, fileClass);
-		sendToElqua(recordObjectList, fileClass);
+		saveToDatBase(recordObjectList, fileClass,session);
 
 	}
 
@@ -289,46 +245,75 @@ public class DataInputProcessor {
 		}
 
 	}
+	private static void createBackUpDir() {
+		File folder = new File(localDirectory+"\\Backup");
+		if (!folder.exists()) {
+			folder.mkdirs();
+		}
 
-	private static void saveToDatBase(List objectList, Class fileClass) {
+	}
+	private static void moveToBackUp(String filedir, String filePath) {
+		File file =new File(filedir  +"\\" +filePath);
+		Calendar cal = Calendar.getInstance();
+		Date date = cal.getTime();             
+		SimpleDateFormat format1 = new SimpleDateFormat("yyyy-MM-dd");
+		String date1 = format1.format(date);
+		File folder = new File(localDirectory+"\\Backup"+"\\"+date1);
+		if (!folder.exists()) {
+			folder.mkdirs();
+		}
+		file.renameTo(new File(filedir+"\\Backup"+ "\\" +date1 +"\\"+ file.getName()));
+	}
+
+	private static void saveToDatBase(List objectList, Class fileClass,Session session) {
 		HKAchieveGold HKAG = null;
-		sqlSessionFactory = DbConnectionFactory.getSessionFactory();
-		Session session = sqlSessionFactory.openSession();
-		Transaction tx = session.beginTransaction();
+		
 		if (fileClass.getName().equalsIgnoreCase("com.aia.model.HKAchieveGold")) {
-
-			try {
-
 				hkagDAO.insertList(session, objectList);
-				tx.commit();
-			} catch (Exception e) {
-				tx.rollback();
-			}
-
-			finally {
-				session.close();
-
-			}
-
 		}
 
 	}
 
 	public static void main(String[] args) throws IOException {
+		FTPClient ftpClient = null;
+		Session session = null;
+		Transaction tx = null;
+		sqlSessionFactory = DbConnectionFactory.getSessionFactory();
 		if (args.length > 0) {
 			localDirectory = args[0];
+			clearLocalDirectory();
+			createBackUpDir();
+			ftpClient = FTPConnect.getFtpConnection();
+			FTPConnect.retrieveFiles(ftpClient,localDirectory);
+			 FTPConnect.disconnectConn(ftpClient);
 		}
-		clearLocalDirectory();
-		FTPClient ftpClient = FTPConnect.getFtpConnection();
-		retrieveFiles(ftpClient);
+		
 		File folder = new File(localDirectory);
 		File[] listOfFiles = folder.listFiles();
 		for (int i = 0; i < listOfFiles.length; i++) {
-			if (listOfFiles[i].isFile()) {
-				processFiles(localDirectory + "/" + listOfFiles[i].getName());
+			try{
+				if (listOfFiles[i].isFile()) {
+					session = sqlSessionFactory.openSession();
+					tx = session.beginTransaction();
+					processFiles(localDirectory + "\\" + listOfFiles[i].getName(),session);
+					tx.commit();
+					moveToBackUp(localDirectory , listOfFiles[i].getName());
+					//DataOutputProcessor.sendToElqua(recordObjectList, fileClass);
+				}
 			}
-		}
+			catch(Exception e){
+				tx.rollback();
+			}
+			finally {
+				if (listOfFiles[i].isFile()){
+					session.close();
+				}
+				
 
+			}
+			
+		}
+		
 	}
 
 }
