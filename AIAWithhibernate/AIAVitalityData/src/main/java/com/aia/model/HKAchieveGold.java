@@ -7,6 +7,8 @@ import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.Table;
+import javax.persistence.Temporal;
+import javax.persistence.TemporalType;
 
 import com.aia.common.utils.Constants;
 
@@ -36,6 +38,7 @@ public class HKAchieveGold implements CommonModel {
 	@Column(name="RECORD_STATUS")
 	private String recordStatus;
 	@Column(name="PROCESS_DATE")
+	@Temporal(TemporalType.DATE)
 	private Date processDate;
 	@Column(name="RECORD_ID")
 	private String recordId;
@@ -49,7 +52,13 @@ public class HKAchieveGold implements CommonModel {
 	private String clientId;
 	@Column(name="FILE_TYPE")
 	private String fileType;
+	
+
+
+	@Column(name="FILE_NAME")
+	private String fileName;
 	@Column(name="LAST_MODIFIED_DATE")
+	@Temporal(TemporalType.DATE)
 	private Date lastModifiedDate;
 
 	public HKAchieveGold() {
@@ -186,6 +195,14 @@ public class HKAchieveGold implements CommonModel {
 
 	public void setLastModifiedDate(Date lastModifiedDate) {
 		this.lastModifiedDate = lastModifiedDate;
+	}
+	
+	public String getFileName() {
+		return fileName;
+	}
+
+	public void setFileName(String fileName) {
+		this.fileName = fileName;
 	}
 
 

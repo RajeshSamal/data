@@ -14,10 +14,7 @@ public class HkagDAO {
 
 	private SessionFactory sqlSessionFactory;
 
-	public HkagDAO() {
-		sqlSessionFactory = DbConnectionFactory.getSessionFactory();
-	}
-
+	
 	public void update(HKAchieveGold hkag) {
 
 		Session session = sqlSessionFactory.openSession();
@@ -37,8 +34,9 @@ public class HkagDAO {
 
 	}
 
-	public void insertList(Session session, List<HKAchieveGold> objectList) {
+	public int insertList(Session session, List<HKAchieveGold> objectList,String fileName) {
 		int count = 0;
+		int duplicate =0;
 
 		
 		for (HKAchieveGold hkag : objectList) {
@@ -46,6 +44,7 @@ public class HkagDAO {
 			hkag.setProcessDate(new Date());
 			hkag.setLastModifiedDate(new Date());
 			hkag.setFileType(Constants.HK_GOLD_ARCHIVE);
+			hkag.setFileName(fileName);
 			session.save(hkag);
 			if (++count % 50 == 0) {
 				session.flush();
@@ -53,25 +52,22 @@ public class HkagDAO {
 
 			}
 		}
+		return duplicate;
 		
 	}
-	public void updateList(List<HKAchieveGold> objectList) {
-		Session session = sqlSessionFactory.openSession();
+	public void updateList(List<HKAchieveGold> objectList,Session session) {
+		 session = sqlSessionFactory.openSession();
 		int count = 0;
 
-		Transaction tx = session.beginTransaction();
 		for (HKAchieveGold hkag : objectList) {
 			hkag.setLastModifiedDate(new Date());
 			session.update(hkag);
-			session.getTransaction().commit();
 			if (++count % 50 == 0) {
 				session.flush();
 				session.clear();
 
 			}
 		}
-		tx.commit();
-		session.close();
 
 	}
 

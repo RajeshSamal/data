@@ -3,15 +3,17 @@ package com.aia.model;
 import java.util.Date;
 
 public interface CommonModel {
-	
+
 	public String getMemberFirstNames();
 
 	public void setMemberFirstNames(String memberFirstNames);
+
 	public String getMemberSurname();
 
 	public void setMemberSurname(String memberSurname);
 
 	public String getEmailAddress();
+
 	public void setEmailAddress(String emailAddress);
 
 	public String getAiaVitalityMemberNumber();
@@ -37,7 +39,7 @@ public interface CommonModel {
 	public String getRecordId();
 
 	public void setRecordId(String recordId);
-	
+
 	public String getVitalityStatus();
 
 	public void setVitalityStatus(String vitalityStatus);
@@ -54,4 +56,15 @@ public interface CommonModel {
 
 	public void setClientId(String clientId);
 
+	public String getFileType();
+
+	public void setFileType(String fileType);
+
+	public Date getLastModifiedDate();
+
+	public void setLastModifiedDate(Date lastModifiedDate);
+
+	public String getFileName();
+
+	public void setFileName(String fileName);
 }

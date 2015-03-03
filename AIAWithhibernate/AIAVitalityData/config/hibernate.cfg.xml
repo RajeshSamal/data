@@ -28,5 +28,6 @@
 <!-- Drop and re-create the database schema on startup -->
 <property name="hbm2ddl.auto">update</property>
 <mapping class="com.aia.model.HKAchieveGold" />
+<mapping class="com.aia.model.DataFile" />
 </session-factory>	 
 </hibernate-configuration>

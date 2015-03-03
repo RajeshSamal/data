@@ -1,6 +1,7 @@
 package com.aia.common.utils;
 
 import java.io.BufferedOutputStream;
+import java.io.File;
 import java.io.FileInputStream;
 import java.io.FileOutputStream;
 import java.io.IOException;
@@ -9,6 +10,8 @@ import java.io.OutputStream;
 import java.net.SocketException;
 import java.text.DateFormat;
 import java.text.SimpleDateFormat;
+import java.util.Calendar;
+import java.util.Date;
 import java.util.Enumeration;
 import java.util.Properties;
 
@@ -53,7 +56,7 @@ public class FTPConnect {
 		}
 	
 	}
-	 public static FTPClient getFtpConnection()
+	 private static FTPClient getFtpConnection()
 	  {
 		  // get an ftpClient object  
 		  FTPClient ftpClient = new FTPClient();  
@@ -105,6 +108,24 @@ public class FTPConnect {
 			}
 		}
 	 
+	private static void clearLocalDirectory(String localDirectory) {
+			File folder = new File(localDirectory);
+			for (File file : folder.listFiles()) {
+				if(file.isFile()){
+					file.delete();
+				}
+				
+			}
+
+		}
+		private static void createBackUpDir(String localDirectory) {
+			File folder = new File(localDirectory+"\\Backup");
+			if (!folder.exists()) {
+				folder.mkdirs();
+			}
+
+		}
+	 
 	 public static void disconnectConn(FTPClient ftpClient)
 	 {
 		 try
@@ -129,5 +150,28 @@ public class FTPConnect {
 			   }  
 			  }  
 	 }
+	 
+	 public static void processFTP(String localDirectory){
+		 	clearLocalDirectory(localDirectory);
+			createBackUpDir(localDirectory);
+			FTPClient ftpClient = getFtpConnection();
+			FTPConnect.retrieveFiles(ftpClient,localDirectory);
+			 FTPConnect.disconnectConn(ftpClient);
+		 
+	 }
+	 
+		
+		public static void moveToBackUp(String filedir, String filePath) {
+			File file =new File(filedir  +"\\" +filePath);
+			Calendar cal = Calendar.getInstance();
+			Date date = cal.getTime();             
+			SimpleDateFormat format1 = new SimpleDateFormat("yyyy-MM-dd");
+			String date1 = format1.format(date);
+			File folder = new File(filedir+"\\Backup"+"\\"+date1);
+			if (!folder.exists()) {
+				folder.mkdirs();
+			}
+			file.renameTo(new File(filedir+"\\Backup"+ "\\" +date1 +"\\"+ file.getName()));
+		}
 
 }
