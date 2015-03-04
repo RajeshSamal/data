@@ -90,6 +90,8 @@ public class DataInputProcessor {
 		OutputStream output = null;
 		BufferedOutputStream bos = null;
 		try {
+			ftpClient.setBufferSize(1024 * 1024);
+			ftpClient.enterLocalPassiveMode();
 			files = ftpClient.listFiles();
 			for (FTPFile file : files) {
 				String details = file.getName();
