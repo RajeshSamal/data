@@ -7,44 +7,30 @@ import org.hibernate.Session;
 import org.hibernate.SessionFactory;
 import org.hibernate.Transaction;
 
-import com.aia.model.DataFile;
+import com.aia.model.FTP;
 
-public class DataFileDao {
-
+public class FTPDao {
+	
 	private SessionFactory sqlSessionFactory;
 
-	public DataFileDao() {
+	public FTPDao() {
 		sqlSessionFactory = DbConnectionFactory.getSessionFactory();
 	}
 
-	public void update(DataFile dataFile, Session session) {
-
-		session.save(dataFile);
-
-	}
-
-	public void insert(DataFile dataFile, Session session) {
-
-		session.save(dataFile);
-
-	}
 	
-	public boolean isFileProcessed(String fileName) {
-		boolean exist = false;
+	
+
+	public FTP getFTPDetails(){
 		Session session =null;
 		try{
 			session = sqlSessionFactory.openSession();
 			Transaction tx = session.beginTransaction();
-			String hql ="from DataFile where fielName= :currentFileName";
+			String hql ="from FTP";
 			Query query = session.createQuery(hql);
-			query.setParameter("currentFileName",fileName);
 			List file=query.list();
 			tx.commit();
-			int i = file.size();
-			if(i>0){
-				exist=true;
-			}
-			return exist;
+			return (FTP)file.get(0);
+			
 		}
 		
 		finally{
@@ -53,7 +39,7 @@ public class DataFileDao {
 			}
 			
 		}
-
 	}
+
 
 }

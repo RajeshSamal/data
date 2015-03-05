@@ -19,55 +19,28 @@ import org.apache.commons.net.ftp.FTPClient;
 import org.apache.commons.net.ftp.FTPFile;
 import org.apache.log4j.Logger;
 
+import com.aia.dao.EloquaDao;
+import com.aia.data.DataInputProcessor;
 import com.aia.data.DataOutputProcessor;
+import com.aia.model.FTP;
 
 public class FTPConnect {
 	
 	static Logger logger = Logger.getLogger(FTPConnect.class);
-	private static String host="";
-	private static String username="";
-	private static String password="";
-	static{
-
-		Properties prop = new Properties();
-		InputStream input = null;
-		try {
-
-			input = new FileInputStream("config\\ftp.properties");
-
-			// load a properties file
-			prop.load(input);
-
-			Enumeration e = prop.propertyNames();
-			host = prop.getProperty("host");
-			username = prop.getProperty("username");
-			password = prop.getProperty("password");
-
-		} catch (IOException ex) {
-			ex.printStackTrace();
-		} finally {
-			if (input != null) {
-				try {
-					input.close();
-				} catch (IOException e) {
-					e.printStackTrace();
-				}
-			}
-		}
 	
-	}
 	 private static FTPClient getFtpConnection()
 	  {
 		  // get an ftpClient object  
-		  FTPClient ftpClient = new FTPClient();  
+		  FTPClient ftpClient = new FTPClient();
+		  FTP ftp = DataInputProcessor.ftpDao.getFTPDetails();
 		  
 		  try {  
 		   // pass directory path on server to connect  
-		   ftpClient.connect(host);  
+		   ftpClient.connect(ftp.getHost());  
 		  
 		   // pass username and password, returned true if authentication is  
 		   // successful  
-		   boolean login = ftpClient.login(username, password);  
+		   boolean login = ftpClient.login(ftp.getUser(), ftp.getPassword());  
 		  
 		   if (login) {  
 		    System.out.println("Connection established...");  

@@ -7,44 +7,29 @@ import org.hibernate.Session;
 import org.hibernate.SessionFactory;
 import org.hibernate.Transaction;
 
-import com.aia.model.DataFile;
+import com.aia.model.Eloqua;
 
-public class DataFileDao {
-
+public class EloquaDao {
+	
 	private SessionFactory sqlSessionFactory;
 
-	public DataFileDao() {
+	public EloquaDao() {
 		sqlSessionFactory = DbConnectionFactory.getSessionFactory();
 	}
-
-	public void update(DataFile dataFile, Session session) {
-
-		session.save(dataFile);
-
-	}
-
-	public void insert(DataFile dataFile, Session session) {
-
-		session.save(dataFile);
-
-	}
 	
-	public boolean isFileProcessed(String fileName) {
-		boolean exist = false;
+	
+
+	public Eloqua getEloquaDetails(){
 		Session session =null;
 		try{
 			session = sqlSessionFactory.openSession();
 			Transaction tx = session.beginTransaction();
-			String hql ="from DataFile where fielName= :currentFileName";
+			String hql ="from Eloqua";
 			Query query = session.createQuery(hql);
-			query.setParameter("currentFileName",fileName);
 			List file=query.list();
 			tx.commit();
-			int i = file.size();
-			if(i>0){
-				exist=true;
-			}
-			return exist;
+			return (Eloqua)file.get(0);
+			
 		}
 		
 		finally{
@@ -53,7 +38,6 @@ public class DataFileDao {
 			}
 			
 		}
-
 	}
 
 }

@@ -5,6 +5,7 @@ import java.util.List;
 
 import org.apache.log4j.Logger;
 
+import com.aia.common.utils.Constants;
 import com.aia.model.CDODetails;
 import com.aia.model.CommonModel;
 import com.aia.model.HKAchieveGold;
@@ -13,10 +14,14 @@ import com.aia.service.AIAService;
 public class DataOutputProcessor {
 	static Logger logger = Logger.getLogger(DataOutputProcessor.class);
 	
-	private static void sendToElqua(List objectList, Class fileClass) {
+	public static void sendToElqua(String key) {
+		Class fileClass= FileToObjectList.getFileClass(key);
 		List<CDODetails> cdoDetailsList = new ArrayList<CDODetails>();
 		HKAchieveGold HKAG = null;
+		String fileType = null;
 		if (fileClass.getName().equalsIgnoreCase("com.aia.model.HKAchieveGold")) {
+			fileType = Constants.HK_GOLD_ARCHIVE;
+			List<HKAchieveGold> objectList = DataInputProcessor.hkagDAO.getList();
 			for (int i = 0; i < objectList.size(); i++) {
 
 				HKAG = (HKAchieveGold) objectList.get(i);
@@ -27,7 +32,7 @@ public class DataOutputProcessor {
 		}
 
 		AIAService aiaService = new AIAService();
-		aiaService.syncCDODataToEloqua(cdoDetailsList);
+		aiaService.syncDataToEloqua(cdoDetailsList, fileType);
 
 	}
 	

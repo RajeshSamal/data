@@ -32,7 +32,7 @@ public class FileToObjectList {
 		return classMapName;
 	}
 
-	private static Class getFileClass(String fileName) {
+	public static Class getFileClass(String fileName) {
 
 		Class fileClass = null;
 		String classMapName = getFileNameFromClassName(fileName);
@@ -178,7 +178,7 @@ public class FileToObjectList {
 		File[] listOfFiles = folder.listFiles();
 		for (int i = 0; i < listOfFiles.length; i++) {
 			try {
-				if (listOfFiles[i].isFile()) {
+				if (listOfFiles[i].isFile() && (!(DataInputProcessor.fileDAO.isFileProcessed(listOfFiles[i].getName())))) {
 					session = sqlSessionFactory.openSession();
 					tx = session.beginTransaction();
 					int[] records =processFile(
@@ -190,19 +190,18 @@ public class FileToObjectList {
 					dataFile.setTotalRecords(records[0]);
 					dataFile.setDuplicateRecords(records[1]);
 					DataInputProcessor.fileDAO.insert(dataFile,session);
+					String key = localDirectory + "\\" + listOfFiles[i].getName();
+					DataOutputProcessor.sendToElqua(key);
 					tx.commit();
-					
 					FTPConnect.moveToBackUp(localDirectory,
 							listOfFiles[i].getName());
 					
 					
-					// DataOutputProcessor.sendToElqua(recordObjectList,
-					// fileClass);
 				}
 			} catch (Exception e) {
 				tx.rollback();
 			} finally {
-				if (listOfFiles[i].isFile()) {
+				if (listOfFiles[i].isFile() && session!=null) {
 					session.close();
 				}
 

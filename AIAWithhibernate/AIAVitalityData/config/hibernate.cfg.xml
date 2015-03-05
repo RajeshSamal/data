@@ -29,5 +29,9 @@
 <property name="hbm2ddl.auto">update</property>
 <mapping class="com.aia.model.HKAchieveGold" />
 <mapping class="com.aia.model.DataFile" />
+<mapping class="com.aia.model.FTP" />
+<mapping class="com.aia.model.Eloqua" />
+<mapping class="com.aia.model.CustomObjectId" />
+<mapping class="com.aia.model.CustomFieldId" />
 </session-factory>	 
 </hibernate-configuration>

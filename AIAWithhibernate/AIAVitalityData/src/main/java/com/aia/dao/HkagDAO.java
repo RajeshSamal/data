@@ -3,6 +3,7 @@ package com.aia.dao;
 import java.util.Date;
 import java.util.List;
 
+import org.hibernate.Query;
 import org.hibernate.Session;
 import org.hibernate.SessionFactory;
 import org.hibernate.Transaction;
@@ -14,7 +15,9 @@ public class HkagDAO {
 
 	private SessionFactory sqlSessionFactory;
 
-	
+	public HkagDAO() {
+		sqlSessionFactory = DbConnectionFactory.getSessionFactory();
+	}
 	public void update(HKAchieveGold hkag) {
 
 		Session session = sqlSessionFactory.openSession();
@@ -31,6 +34,19 @@ public class HkagDAO {
 		session.save(hkag);
 		tx.commit();
 		session.close();
+
+	}
+	
+	public List getList() {
+		Session session = sqlSessionFactory.openSession();
+		Transaction tx = session.beginTransaction();
+		String hql = "from HKAchieveGold where recordStatus= :status";
+		Query query = session.createQuery(hql);
+		query.setParameter("status", Constants.RECORD_SAVED);
+		List<HKAchieveGold> hkagList = query.list();
+		tx.commit();
+		session.close();
+		return hkagList;
 
 	}
 

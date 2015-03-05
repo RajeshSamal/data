@@ -3,15 +3,10 @@
  */
 package com.aia.service;
 
-import java.io.FileInputStream;
-import java.io.IOException;
-import java.io.InputStream;
 import java.util.ArrayList;
-import java.util.Enumeration;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
-import java.util.Properties;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -22,7 +17,10 @@ import com.eloqua.api.models.RestObjectList;
 import com.eloqua.api.models.Sync;
 import com.eloqua.api.models.SyncResult;
 import com.aia.common.utils.Constants;
+import com.aia.dao.CustomObjectDao;
+import com.aia.data.DataInputProcessor;
 import com.aia.model.CDODetails;
+import com.aia.model.Eloqua;
 
 /**
  * @author verticurl
@@ -32,96 +30,37 @@ public class AIAService {
 
 	/** The Logger instance */
 	private static final Logger LOG = LoggerFactory.getLogger(AIAService.class);
-	private String custObjectId = "15";
+	private String custObjectId;
 
-	private static String site = "";
-	private static String user = "";
-	private static String password = "";
-	private static String baseUrl = "";
-
-	static {
-		Properties prop = new Properties();
-		InputStream input = null;
-		try {
-
-			input = new FileInputStream("config\\eloqua.properties");
-
-			// load a properties file
-			prop.load(input);
-
-			Enumeration e = prop.propertyNames();
-			site = prop.getProperty("site");
-			user = prop.getProperty("user");
-			password = prop.getProperty("password");
-			baseUrl = prop.getProperty("baseUrl");
-
-		} catch (IOException ex) {
-			ex.printStackTrace();
-		} finally {
-			if (input != null) {
-				try {
-					input.close();
-				} catch (IOException e) {
-					e.printStackTrace();
-				}
-			}
-		}
-	}
 
 	/***
 	 * create the CDO records in eloqua.
 	 * 
 	 * @param cdoDetailsList
 	 */
-	public void syncCDODataToEloqua(List<CDODetails> cdoDetailsList) {
+	public void syncDataToEloqua(List<CDODetails> cdoDetailsList, String fileType) {
+		Eloqua eloqua = DataInputProcessor.eloquaDao.getEloquaDetails();
+		custObjectId = DataInputProcessor.customDao.getCustomObjectId(fileType);
 
 		ImportCustomDataObjectHelper cdoHelper = new ImportCustomDataObjectHelper(
-				site, user, password, baseUrl);
+				eloqua.getSite(), eloqua.getUser(), eloqua.getPassword(), eloqua.getSite());
 
-		try {
-			Map<String, String> importFields = new HashMap<String, String>();
-
+			Map<String, String> importFields = null;
+			
 			if (cdoDetailsList.size() > 0) {
-
-				// importFields.put("Date_Created1",
-				// "{{CustomObject[18].Field[178]}}");
-				// importFields.put("Date_Modified1",
-				// "{{CustomObject[18].Field[179]}}");
-				importFields.put("LANGUAGE_PREFERENCE1", "{{CustomObject["
-						+ custObjectId + "].Field[367]}}");
-				importFields.put("CLIENT_ID1", "{{CustomObject[" + custObjectId
-						+ "].Field[368]}}");
-				importFields.put("GENDER1", "{{CustomObject[" + custObjectId
-						+ "].Field[369]}}");
-				importFields.put("POINTS_BALANCE1", "{{CustomObject["
-						+ custObjectId + "].Field[370]}}");
-				importFields.put("VITALITY_STATUS1", "{{CustomObject["
-						+ custObjectId + "].Field[371]}}");
-				importFields.put("ENTITY_REFERENCE_NUMBER1", "{{CustomObject["
-						+ custObjectId + "].Field[372]}}");
-				importFields.put("AIA_VITALITY_MEMBER_NUMBER1",
-						"{{CustomObject[" + custObjectId + "].Field[373]}}");
-				importFields.put("EMAIL_ADDRESS1", "{{CustomObject["
-						+ custObjectId + "].Field[374]}}");
-				importFields.put("MEMBER_SURNAME1", "{{CustomObject["
-						+ custObjectId + "].Field[375]}}");
-				importFields.put("MEMBER_FIRST_NAMES1", "{{CustomObject["
-						+ custObjectId + "].Field[376]}}");
-
-				// importFields.put("Comments1",
-				// "{{CustomObject["+custObjectId+"].Field["+custom_lead_field_comments+"]}}");
-				// importFields.put("EmailAddressField",
-				// "{{CustomObject["+custObjectId+"].Contact.Field(C_EmailAddress)}}");
-
-				// create the structure for the import
+				if(fileType.equals(Constants.HK_GOLD_ARCHIVE)){
+					importFields = prepareHKAGImportField();
+				}
+				
 				Import importStruc = cdoHelper.createImportStructure(
 						custObjectId, importFields);
-
 				if (importStruc != null) {
 					String importUri = importStruc.getUri();
-
+					List<Map<String, Object>> cdoDataList= null;
 					// import the data
-					List<Map<String, Object>> cdoDataList = getCDOListForElq(cdoDetailsList);
+					if(fileType.equals(Constants.HK_GOLD_ARCHIVE)){
+						cdoDataList = getCDOListForHKAG(cdoDetailsList);
+					}
 
 					if (cdoDataList != null) {
 						Sync sync = cdoHelper
@@ -147,26 +86,73 @@ public class AIAService {
 						}
 					}
 				}
-			}
+			
 
-		} catch (Exception e) {
-			LOG.error("Exception occured while creating lead to Eloqua. {0}", e);
-
-		}
+		} 
 
 	}
+	
+	private Map<String, String> prepareHKAGImportField(){
+		Map<String, String> importFields = new HashMap<String, String>();
+		CustomObjectDao dao= DataInputProcessor.customDao;
+		String fileType= Constants.HK_GOLD_ARCHIVE;
+		String languagePrefernceID = dao.getCustomFieldId(fileType, "LANGUAGE_PREFERENCE1");
+		String clientID = dao.getCustomFieldId(fileType, "CLIENT_ID1");
+		String genderId = dao.getCustomFieldId(fileType, "GENDER1");
+		String pointBalanceID = dao.getCustomFieldId(fileType, "POINTS_BALANCE1");
+		String vitalityStatusID = dao.getCustomFieldId(fileType, "VITALITY_STATUS1");
+		String EntityReferenceID = dao.getCustomFieldId(fileType, "ENTITY_REFERENCE_NUMBER1");
+		String aiaVitalityNumberID = dao.getCustomFieldId(fileType, "AIA_VITALITY_MEMBER_NUMBER1");
+		String emailAddressID = dao.getCustomFieldId(fileType, "EMAIL_ADDRESS1");
+		String memberSurNmaeID = dao.getCustomFieldId(fileType, "MEMBER_SURNAME1");
+		String memberFirstNameID = dao.getCustomFieldId(fileType, "MEMBER_FIRST_NAMES1");
+		
+		importFields.put("LANGUAGE_PREFERENCE1", "{{CustomObject["
+				+ custObjectId + "].Field[" + languagePrefernceID+ "]}}");
+		
+		importFields.put("CLIENT_ID1", "{{CustomObject[" + custObjectId
+				+ "].Field["+clientID+"]}}");
+		
+		importFields.put("GENDER1", "{{CustomObject[" + custObjectId
+				+ "].Field["+genderId+"]}}");
+		
+		importFields.put("POINTS_BALANCE1", "{{CustomObject["
+				+ custObjectId + "].Field["+pointBalanceID+"]}}");
+		
+		importFields.put("VITALITY_STATUS1", "{{CustomObject["
+				+ custObjectId + "].Field["+vitalityStatusID+"]}}");
+		
+		importFields.put("ENTITY_REFERENCE_NUMBER1", "{{CustomObject["
+				+ custObjectId + "].Field["+EntityReferenceID+"]}}");
+		
+		importFields.put("AIA_VITALITY_MEMBER_NUMBER1",
+				"{{CustomObject[" + custObjectId + "].Field["+aiaVitalityNumberID+"]}}");
+		
+		importFields.put("EMAIL_ADDRESS1", "{{CustomObject["
+				+ custObjectId + "].Field["+emailAddressID+"]}}");
+		
+		importFields.put("MEMBER_SURNAME1", "{{CustomObject["
+				+ custObjectId + "].Field["+memberSurNmaeID+"]}}");
+		
+		importFields.put("MEMBER_FIRST_NAMES1", "{{CustomObject["
+				+ custObjectId + "].Field["+memberFirstNameID+"]}}");
+		
+		return importFields;
+		
+		
+	}
 
-	private List<Map<String, Object>> getCDOListForElq(
+	private List<Map<String, Object>> getCDOListForHKAG(
 			List<CDODetails> cdoDetailsList) {
 
 		List<Map<String, Object>> cdoDataList = new ArrayList<Map<String, Object>>();
 		for (CDODetails cdoDetail : cdoDetailsList) {
-			cdoDataList.add(prepareLeadData(cdoDetail));
+			cdoDataList.add(prepareHKAGLeadData(cdoDetail));
 		}
 		return cdoDataList;
 	}
 
-	private Map<String, Object> prepareLeadData(CDODetails cdoDetail) {
+	private Map<String, Object> prepareHKAGLeadData(CDODetails cdoDetail) {
 		Map<String, Object> cdoData = new HashMap<String, Object>();
 
 		if (cdoDetail != null) {
