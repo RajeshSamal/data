@@ -1,4 +1,5 @@
 package com.aia.model;
+
 import java.util.Date;
 
 import javax.persistence.Column;
@@ -16,48 +17,46 @@ import com.aia.common.utils.Constants;
  * HkAchieveGold class
  */
 @Entity
-@Table(name="hk_achieve_gold")
+@Table(name = "hk_achieve_gold")
 public class HKAchieveGold implements CommonModel {
 
 	@Id
-	@Column(name="HK_ACHIEVE_GOLD_ID")
-	@GeneratedValue(strategy=GenerationType.AUTO)
+	@Column(name = "HK_ACHIEVE_GOLD_ID")
+	@GeneratedValue(strategy = GenerationType.AUTO)
 	private int hkAchieveGoldId;
-	@Column(name="MEMBER_FIRST_NAMES")
+	@Column(name = "MEMBER_FIRST_NAMES")
 	private String memberFirstNames;
-	@Column(name="MEMBER_SURNAME")
+	@Column(name = "MEMBER_SURNAME")
 	private String memberSurname;
-	@Column(name="EMAIL_ADDRESS")
+	@Column(name = "EMAIL_ADDRESS")
 	private String emailAddress;
-	@Column(name="AIA_VITALITY_MEMBER_NUMBER")
+	@Column(name = "AIA_VITALITY_MEMBER_NUMBER")
 	private String aiaVitalityMemberNumber;
-	@Column(name="ENTITY_REFERENCE_NUMBER")
+	@Column(name = "ENTITY_REFERENCE_NUMBER")
 	private String entityReferenceNumber;
-	@Column(name="LANGUAGE_PREFERENCE")
+	@Column(name = "LANGUAGE_PREFERENCE")
 	private String languagePreference;
-	@Column(name="RECORD_STATUS")
+	@Column(name = "RECORD_STATUS")
 	private String recordStatus;
-	@Column(name="PROCESS_DATE")
+	@Column(name = "PROCESS_DATE")
 	@Temporal(TemporalType.DATE)
 	private Date processDate;
-	@Column(name="RECORD_ID")
+	@Column(name = "RECORD_ID")
 	private String recordId;
-	@Column(name="VITALITY_STATUS")
+	@Column(name = "VITALITY_STATUS")
 	private String vitalityStatus;
-	@Column(name="POINTS_BALANCE")
+	@Column(name = "POINTS_BALANCE")
 	private String pointsBalance;
-	@Column(name="GENDER")
+	@Column(name = "GENDER")
 	private String gender;
-	@Column(name="CLIENT_ID")
+	@Column(name = "CLIENT_ID")
 	private String clientId;
-	@Column(name="FILE_TYPE")
+	@Column(name = "FILE_TYPE")
 	private String fileType;
-	
 
-
-	@Column(name="FILE_NAME")
+	@Column(name = "FILE_NAME")
 	private String fileName;
-	@Column(name="LAST_MODIFIED_DATE")
+	@Column(name = "LAST_MODIFIED_DATE")
 	@Temporal(TemporalType.DATE)
 	private Date lastModifiedDate;
 
@@ -135,7 +134,7 @@ public class HKAchieveGold implements CommonModel {
 	public void setRecordId(String recordId) {
 		this.recordId = recordId;
 	}
-	
+
 	public String getVitalityStatus() {
 		return vitalityStatus;
 	}
@@ -167,36 +166,31 @@ public class HKAchieveGold implements CommonModel {
 	public void setClientId(String clientId) {
 		this.clientId = clientId;
 	}
-	
+
 	public int getHkAchieveGoldId() {
 		return hkAchieveGoldId;
 	}
-
 
 	public void setHkAchieveGoldId(int hkAchieveGoldId) {
 		this.hkAchieveGoldId = hkAchieveGoldId;
 	}
 
-
 	public String getFileType() {
 		return fileType;
 	}
-
 
 	public void setFileType(String fileType) {
 		this.fileType = fileType;
 	}
 
-
 	public Date getLastModifiedDate() {
 		return lastModifiedDate;
 	}
 
-
 	public void setLastModifiedDate(Date lastModifiedDate) {
 		this.lastModifiedDate = lastModifiedDate;
 	}
-	
+
 	public String getFileName() {
 		return fileName;
 	}
@@ -205,5 +199,17 @@ public class HKAchieveGold implements CommonModel {
 		this.fileName = fileName;
 	}
 
-
+	@Override
+	public boolean equals(Object other) {
+		boolean result = false;
+		if (other instanceof HKAchieveGold) {
+			HKAchieveGold that = (HKAchieveGold) other;
+			if(this.getEmailAddress() !=null){
+				result = (this.getEmailAddress().equalsIgnoreCase(that
+						.getEmailAddress()));
+			}
+			
+		}
+		return result;
+	}
 }

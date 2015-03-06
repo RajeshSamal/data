@@ -32,11 +32,27 @@ public class FileToObjectList {
 		return classMapName;
 	}
 
+	//input:HK-ACHIEVE_GOLD-554335.csv
 	public static Class getFileClass(String fileName) {
 
 		Class fileClass = null;
 		String classMapName = getFileNameFromClassName(fileName);
 		String className = DataInputProcessor.fileToClassMap.get(classMapName);
+		try {
+			fileClass = Class.forName(className);
+		} catch (ClassNotFoundException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+
+		return fileClass;
+
+	}
+	//input : HK-ACHIEVE_GOLD
+	public static Class getClassFromFile(String fileName) {
+
+		Class fileClass = null;
+		String className = DataInputProcessor.fileToClassMap.get(fileName);
 		try {
 			fileClass = Class.forName(className);
 		} catch (ClassNotFoundException e) {
@@ -150,22 +166,20 @@ public class FileToObjectList {
 	private static int[] processFile(String fileName, Session session) {
 		Class fileClass = getFileClass(fileName);
 		List recordObjectList = fileToRecordList(fileName, fileClass);
-		int duplicate = saveToDatBase(recordObjectList, fileClass, session,fileName);
+		List safeToSave = HandleDuplicates.handleDuplicate(recordObjectList,fileClass);
+		saveToDatBase(safeToSave, fileClass, session,fileName);
 		int[] records = new int[2];
 		records[0] = recordObjectList.size();
-		records[1] = duplicate;
+		records[1] = HandleDuplicates.noOdDuplicate;
 		return records;
 
 	}
 	
-	private static int saveToDatBase(List objectList, Class fileClass,Session session,String fileName) {
-		HKAchieveGold HKAG = null;
-		int dulicate =0;
+	private static void saveToDatBase(List objectList, Class fileClass,Session session,String fileName) {
 		
 		if (fileClass.getName().equalsIgnoreCase("com.aia.model.HKAchieveGold")) {
-			 dulicate = DataInputProcessor.hkagDAO.insertList(session, objectList,fileName);
+			DataInputProcessor.hkagDAO.insertList(session, objectList,fileName);
 		}
-		return dulicate;
 
 	}
 
@@ -191,7 +205,6 @@ public class FileToObjectList {
 					dataFile.setDuplicateRecords(records[1]);
 					DataInputProcessor.fileDAO.insert(dataFile,session);
 					String key = localDirectory + "\\" + listOfFiles[i].getName();
-					DataOutputProcessor.sendToElqua(key);
 					tx.commit();
 					FTPConnect.moveToBackUp(localDirectory,
 							listOfFiles[i].getName());
