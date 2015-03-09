@@ -15,6 +15,8 @@ import com.aia.common.utils.Constants;
 import com.aia.dao.DbConnectionFactory;
 import com.aia.eloqua.process.HKAGProcess;
 import com.aia.eloqua.send.HKAGSend;
+import com.aia.eloqua.send.HKAPSend;
+import com.aia.eloqua.send.HKASSend;
 import com.aia.model.CDODetails;
 import com.aia.model.CommonModel;
 import com.aia.model.HKAchieveGold;
@@ -30,6 +32,16 @@ public class DataOutputProcessor {
 
 			HKAGSend.sendToElqua();
 		}
+		
+		else if (fileClass.getName().equalsIgnoreCase("com.aia.model.HKAchievePlatinum")) {
+
+			HKAPSend.sendToElqua();
+		}
+		
+		else if (fileClass.getName().equalsIgnoreCase("com.aia.model.HKAchieveSilver")) {
+
+			HKASSend.sendToElqua();
+		}
 
 	}
 
@@ -38,6 +50,12 @@ public class DataOutputProcessor {
 
 		if (fileClass.getName().equalsIgnoreCase("com.aia.model.HKAchieveGold")) {
 			HKAGSend.sendDistinctDuplicateToElqua();
+		}
+		else if (fileClass.getName().equalsIgnoreCase("com.aia.model.HKAchievePlatinum")) {
+			HKAPSend.sendDistinctDuplicateToElqua();
+		}
+		else if (fileClass.getName().equalsIgnoreCase("com.aia.model.HKAchieveSilver")) {
+			HKASSend.sendDistinctDuplicateToElqua();
 		}
 
 	}

@@ -17,13 +17,13 @@ import com.aia.common.utils.Constants;
  * HkAchieveGold class
  */
 @Entity
-@Table(name = "hk_achieve_gold")
-public class HKAchieveGold implements CommonModel {
+@Table(name = "hk_achieve_silver")
+public class HKAchieveSilver implements CommonModel {
 
 	@Id
-	@Column(name = "HK_ACHIEVE_GOLD_ID")
+	@Column(name = "HK_ACHIEVE_SILVER_ID")
 	@GeneratedValue(strategy = GenerationType.AUTO)
-	private int hkAchieveGoldId;
+	private int hkAchieveSilverId;
 	@Column(name = "MEMBER_FIRST_NAMES")
 	private String memberFirstNames;
 	@Column(name = "MEMBER_SURNAME")
@@ -59,7 +59,7 @@ public class HKAchieveGold implements CommonModel {
 	@Temporal(TemporalType.DATE)
 	private Date lastModifiedDate;
 
-	public HKAchieveGold() {
+	public HKAchieveSilver() {
 	}
 
 	public String getMemberFirstNames() {
@@ -166,12 +166,12 @@ public class HKAchieveGold implements CommonModel {
 		this.clientId = clientId;
 	}
 
-	public int getHkAchieveGoldId() {
-		return hkAchieveGoldId;
+	public int getHkAchieveSilverId() {
+		return hkAchieveSilverId;
 	}
 
-	public void setHkAchieveGoldId(int hkAchieveGoldId) {
-		this.hkAchieveGoldId = hkAchieveGoldId;
+	public void setHkAchieveSilverId(int hkAchieveSilverId) {
+		this.hkAchieveSilverId = hkAchieveSilverId;
 	}
 
 	public String getFileType() {
@@ -201,8 +201,8 @@ public class HKAchieveGold implements CommonModel {
 	@Override
 	public boolean equals(Object other) {
 		boolean result = false;
-		if (other instanceof HKAchieveGold) {
-			HKAchieveGold that = (HKAchieveGold) other;
+		if (other instanceof HKAchieveSilver) {
+			HKAchieveSilver that = (HKAchieveSilver) other;
 			if(this.getEmailAddress() !=null){
 				result = (this.getEmailAddress().equalsIgnoreCase(that
 						.getEmailAddress()));

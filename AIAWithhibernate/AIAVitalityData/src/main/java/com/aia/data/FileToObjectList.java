@@ -201,6 +201,12 @@ public class FileToObjectList {
 		if (fileClass.getName().equalsIgnoreCase("com.aia.model.HKAchieveGold")) {
 			DataInputProcessor.hkagDAO.insertList(session, objectList,fileName);
 		}
+		else if (fileClass.getName().equalsIgnoreCase("com.aia.model.HKAchievePlatinum")) {
+			DataInputProcessor.hkapDAO.insertList(session, objectList,fileName);
+		}
+		else if (fileClass.getName().equalsIgnoreCase("com.aia.model.HKAchieveSilver")) {
+			DataInputProcessor.hkasDAO.insertList(session, objectList,fileName);
+		}
 
 	}
 

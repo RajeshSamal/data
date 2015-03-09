@@ -9,29 +9,29 @@ import org.hibernate.SessionFactory;
 import org.hibernate.Transaction;
 
 import com.aia.common.utils.Constants;
-import com.aia.model.HKAchieveGold;
+import com.aia.model.HKAchieveSilver;
 
-public class HkagDAO {
+public class HkasDAO {
 
 	private SessionFactory sqlSessionFactory;
 
-	public HkagDAO() {
+	public HkasDAO() {
 		sqlSessionFactory = DbConnectionFactory.getSessionFactory();
 	}
-	public void update(HKAchieveGold hkag) {
+	public void update(HKAchieveSilver hkas) {
 
 		Session session = sqlSessionFactory.openSession();
 		Transaction tx = session.beginTransaction();
-		session.save(hkag);
+		session.save(hkas);
 		tx.commit();
 		session.close();
 
 	}
 
-	public void insert(HKAchieveGold hkag) {
+	public void insert(HKAchieveSilver hkas) {
 		Session session = sqlSessionFactory.openSession();
 		Transaction tx = session.beginTransaction();
-		session.save(hkag);
+		session.save(hkas);
 		tx.commit();
 		session.close();
 
@@ -40,12 +40,12 @@ public class HkagDAO {
 	public List getAllList() {
 		Session session = sqlSessionFactory.openSession();
 		Transaction tx = session.beginTransaction();
-		String hql = "from HKAchieveGold";
+		String hql = "from HKAchieveSilver";
 		Query query = session.createQuery(hql);
-		List<HKAchieveGold> hkagList = query.list();
+		List<HKAchieveSilver> hkasList = query.list();
 		tx.commit();
 		session.close();
-		return hkagList;
+		return hkasList;
 
 	}
 	
@@ -54,13 +54,13 @@ public class HkagDAO {
 	public List getListAsStatus(String status) {
 		Session session = sqlSessionFactory.openSession();
 		Transaction tx = session.beginTransaction();
-		String hql = "from HKAchieveGold where recordStatus= :status";
+		String hql = "from HKAchieveSilver where recordStatus= :status";
 		Query query = session.createQuery(hql);
 		query.setParameter("status", status);
-		List<HKAchieveGold> hkagList = query.list();
+		List<HKAchieveSilver> hkasList = query.list();
 		tx.commit();
 		session.close();
-		return hkagList;
+		return hkasList;
 
 	}
 	
@@ -68,26 +68,26 @@ public class HkagDAO {
 	public List getDistnctDuplicates() {
 		Session session = sqlSessionFactory.openSession();
 		Transaction tx = session.beginTransaction();
-		String hql = "from HKAchieveGold where recordStatus= :status and processDate!= :processDate";
+		String hql = "from HKAchieveSilver where recordStatus= :status and processDate!= :processDate";
 		Query query = session.createQuery(hql);
 		query.setParameter("status", Constants.RECORD_DUPLICATE);
 		query.setParameter("processDate", new Date());
-		List<HKAchieveGold> hkagList = query.list();
+		List<HKAchieveSilver> hkasList = query.list();
 		tx.commit();
 		session.close();
-		return hkagList;
+		return hkasList;
 
 	}
 
-	public void insertList(Session session, List<HKAchieveGold> objectList,String fileName) {
+	public void insertList(Session session, List<HKAchieveSilver> objectList,String fileName) {
 		int count = 0;
 	       
-		for (HKAchieveGold hkag : objectList) {
-			hkag.setProcessDate(new Date());
-			hkag.setLastModifiedDate(new Date());
-			hkag.setFileType(Constants.HK_GOLD_ARCHIVE);
-			hkag.setFileName(fileName);
-			session.save(hkag);
+		for (HKAchieveSilver hkas : objectList) {
+			hkas.setProcessDate(new Date());
+			hkas.setLastModifiedDate(new Date());
+			hkas.setFileType(Constants.HK_SILVER_ARCHIVE);
+			hkas.setFileName(fileName);
+			session.save(hkas);
 			if (++count % 50 == 0) {
 				session.flush();
 				session.clear();
@@ -96,12 +96,12 @@ public class HkagDAO {
 		}
 		
 	}
-	public void updateList(List<HKAchieveGold> objectList,Session session) {
+	public void updateList(List<HKAchieveSilver> objectList,Session session) {
 		int count = 0;
 
-		for (HKAchieveGold hkag : objectList) {
-			hkag.setLastModifiedDate(new Date());
-			session.update(hkag);
+		for (HKAchieveSilver hkas : objectList) {
+			hkas.setLastModifiedDate(new Date());
+			session.update(hkas);
 			if (++count % 50 == 0) {
 				session.flush();
 				session.clear();

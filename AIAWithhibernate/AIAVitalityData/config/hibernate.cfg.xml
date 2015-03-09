@@ -3,21 +3,23 @@
 <hibernate-configuration>
 <session-factory>
 <!-- Database connection settings MSSQL-->
+<!--
 <property name="connection.driver_class">com.microsoft.sqlserver.jdbc.SQLServerDriver</property>
 <property name="connection.url">jdbc:sqlserver://127.0.0.1:1433;databaseName=AIA;instanceName=SQLEXPRESS;</property>
 <property name="hibernate.connection.username">sa</property>
 <property name="hibernate.connection.password">Password@</property>
 <property name="dialect">org.hibernate.dialect.SQLServerDialect</property>
+-->
 
   <!-- Database connection settings MSSQL End-->
  <!-- Database connection settings MY-SQL-->
- <!--
+
 <property name="hibernate.dialect">org.hibernate.dialect.MySQLDialect</property>
 <property name="hibernate.connection.driver_class">com.mysql.jdbc.Driver</property>
 <property name="hibernate.connection.url">jdbc:mysql://127.0.0.1/aiadata</property>
 <property name="hibernate.connection.username">root</property>
 <property name="hibernate.connection.password"></property>
--->
+
  <!-- Database connection settings MY-SQL End-->
 
 <property name="connection.pool_size">1</property>
@@ -30,6 +32,8 @@
 <!-- Drop and re-create the database schema on startup -->
 <property name="hbm2ddl.auto">update</property>
 <mapping class="com.aia.model.HKAchieveGold" />
+<mapping class="com.aia.model.HKAchieveSilver" />
+<mapping class="com.aia.model.HKAchievePlatinum" />
 <mapping class="com.aia.model.DataFile" />
 <mapping class="com.aia.model.FTP" />
 <mapping class="com.aia.model.Eloqua" />

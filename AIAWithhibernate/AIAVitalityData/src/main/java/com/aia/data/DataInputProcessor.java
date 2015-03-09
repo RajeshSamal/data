@@ -15,6 +15,8 @@ import com.aia.dao.DataFileDao;
 import com.aia.dao.EloquaDao;
 import com.aia.dao.FTPDao;
 import com.aia.dao.HkagDAO;
+import com.aia.dao.HkapDAO;
+import com.aia.dao.HkasDAO;
 
 public class DataInputProcessor {
 
@@ -22,16 +24,22 @@ public class DataInputProcessor {
 	static Logger logger = Logger.getLogger(DataInputProcessor.class);
 	public static Map<String, String> fileToClassMap = new HashMap<String, String>();
 	private static Map<String, String> HKAchieveGoldColumnMap = new HashMap<String, String>();
+	private static Map<String, String> HKAchieveSilverColumnMap = new HashMap<String, String>();
+	private static Map<String, String> HKAchievePlatinumColumnMap = new HashMap<String, String>();
 	public static Map<String, Map<String, String>> fileMap = new HashMap<String, Map<String, String>>();
 	public static HkagDAO hkagDAO;
+	public static HkasDAO hkasDAO;
+	public static HkapDAO hkapDAO;
 	public static DataFileDao fileDAO;
 	public static EloquaDao eloquaDao;
 	public static FTPDao ftpDao;
 	public static CustomObjectDao customDao;
-	public static String[] fileTypeList= {"HK-ACHIEVE_GOLD"};
+	public static String[] fileTypeList= {"HK-ACHIEVE_GOLD","HK-ACHIEVE_SILVER","HK-ACHIEVE_PLATINUM"};
 
 	static {
 		hkagDAO = new HkagDAO();
+		hkasDAO = new HkasDAO();
+		hkapDAO = new HkapDAO();
 		fileDAO = new DataFileDao();
 		eloquaDao = new EloquaDao();
 		ftpDao = new FTPDao();
@@ -60,6 +68,29 @@ public class DataInputProcessor {
 				String value = prop.getProperty(key);
 				HKAchieveGoldColumnMap.put(key, value);
 			}
+			input = loader.getResourceAsStream("HKAchievePlatinum.properties");
+			prop.load(input);
+			e = prop.propertyNames();
+
+			while (e.hasMoreElements()) {
+				String key = (String) e.nextElement();
+				String value = prop.getProperty(key);
+				HKAchievePlatinumColumnMap.put(key, value);
+			}
+			while (e.hasMoreElements()) {
+				String key = (String) e.nextElement();
+				String value = prop.getProperty(key);
+				HKAchieveGoldColumnMap.put(key, value);
+			}
+			input = loader.getResourceAsStream("HKAchieveSilver.properties");
+			prop.load(input);
+			e = prop.propertyNames();
+
+			while (e.hasMoreElements()) {
+				String key = (String) e.nextElement();
+				String value = prop.getProperty(key);
+				HKAchieveSilverColumnMap.put(key, value);
+			}
 
 		} catch (IOException ex) {
 			ex.printStackTrace();
@@ -75,6 +106,8 @@ public class DataInputProcessor {
 	}
 	static {
 		fileMap.put("HK-ACHIEVE_GOLD", HKAchieveGoldColumnMap);
+		fileMap.put("HK-ACHIEVE_SILVER", HKAchieveSilverColumnMap);
+		fileMap.put("HK-ACHIEVE_PLATINUM", HKAchievePlatinumColumnMap);
 	}
 	
 

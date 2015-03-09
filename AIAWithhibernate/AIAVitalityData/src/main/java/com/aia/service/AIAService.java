@@ -20,6 +20,8 @@ import com.aia.common.utils.Constants;
 import com.aia.dao.CustomObjectDao;
 import com.aia.data.DataInputProcessor;
 import com.aia.eloqua.process.HKAGProcess;
+import com.aia.eloqua.process.HKAPProcess;
+import com.aia.eloqua.process.HKASProcess;
 import com.aia.model.CDODetails;
 import com.aia.model.Eloqua;
 
@@ -53,6 +55,14 @@ public class AIAService {
 				if(fileType.equals(Constants.HK_GOLD_ARCHIVE)){
 					importFields = HKAGProcess.importFields;
 				}
+				else if(fileType.equals(Constants.HK_PLATINUM_ARCHIVE)){
+					importFields = HKAPProcess.importFields;
+					
+				}
+				else if(fileType.equals(Constants.HK_SILVER_ARCHIVE)){
+					importFields = HKASProcess.importFields;
+					
+				}
 				
 				Import importStruc = cdoHelper.createImportStructure(
 						custObjectId, importFields);
@@ -62,6 +72,14 @@ public class AIAService {
 					// import the data
 					if(fileType.equals(Constants.HK_GOLD_ARCHIVE)){
 						cdoDataList = HKAGProcess.getCDOListForHKAG(cdoDetailsList);
+					}
+					else if(fileType.equals(Constants.HK_PLATINUM_ARCHIVE)){
+						cdoDataList = HKAPProcess.getCDOListForHKAP(cdoDetailsList);
+						
+					}
+					else if(fileType.equals(Constants.HK_SILVER_ARCHIVE)){
+						cdoDataList = HKASProcess.getCDOListForHKAS(cdoDetailsList);
+						
 					}
 
 					if (cdoDataList != null) {

@@ -9,4 +9,6 @@ public interface Constants {
 	String RECORD_PROCESSED = "3";
 	String RECORD_DUPLICATE = "4";
 	String HK_GOLD_ARCHIVE = "HKAG";
+	String HK_SILVER_ARCHIVE = "HKAS";
+	String HK_PLATINUM_ARCHIVE = "HKAP";
 }
