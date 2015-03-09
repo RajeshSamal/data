@@ -52,15 +52,14 @@ CREATE TABLE HK_ACHIEVE_GOLD (
   FILE_TYPE VARCHAR(70) NULL,
   CUSTOME_ID VARCHAR(70) NULL);
   
-  CREATE TABLE CUSTOM_OBJECT_ID (
+  CREATE TABLE CUSTOM_FIELD (
   ID int IDENTITY(1,1) PRIMARY KEY,
   FILE_TYPE VARCHAR(70) NULL,
   FIELD_NAME VARCHAR(70) NULL,
   FIELD_ID VARCHAR(70) NULL);
   
-  
-  insert into ELOQUA (SITE, USER_NAME, PASS_WORD, BASE_URL, MODIFIED_BY) values ("AIA", "Ramya.Ponnusamy", "Verticurl2014!", "https://secure.eloqua.com/API", "SCRIPT");
-  insert into FTP (HOST, USER_NAME, PASS_WORD, MODIFIED_BY) values ("0343825.netsolhost.com", "verticurl_aia", "Passw0rd2015", "SCRIPT");
+ insert into ELOQUA (SITE, USER_NAME, PASS_WORD, BASE_URL, MODIFIED_BY) values ("AIA", "Ramya.Ponnusamy", "Verticurl2014!", "https://secure.eloqua.com/API", "SCRIPT");
+ insert into FTP (HOST, USER_NAME, PASS_WORD, MODIFIED_BY) values ("0343825.netsolhost.com", "verticurl_aia", "Passw0rd2015", "SCRIPT");
   
  insert into CUSTOM_OBJECT_ID (FILE_TYPE, CUSTOME_ID) values ("HKAG","15");
  insert into CUSTOM_FIELD (FILE_TYPE,  FIELD_NAME, FIELD_ID) values ("HKAG", "LANGUAGE_PREFERENCE1", "367");

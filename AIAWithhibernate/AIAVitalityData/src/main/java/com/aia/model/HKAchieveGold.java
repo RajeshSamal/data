@@ -212,4 +212,8 @@ public class HKAchieveGold implements CommonModel {
 		}
 		return result;
 	}
+	@Override
+	 public int hashCode(){
+		    return emailAddress.hashCode();
+		  }
 }

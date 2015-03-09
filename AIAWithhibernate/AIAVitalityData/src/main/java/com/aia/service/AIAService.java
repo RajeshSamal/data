@@ -39,12 +39,13 @@ public class AIAService {
 	 * 
 	 * @param cdoDetailsList
 	 */
-	public static void syncDataToEloqua(List<CDODetails> cdoDetailsList, String fileType) {
+	public static int syncDataToEloqua(List<CDODetails> cdoDetailsList, String fileType) {
+		int status= -1;
 		Eloqua eloqua = DataInputProcessor.eloquaDao.getEloquaDetails();
 		custObjectId = DataInputProcessor.customDao.getCustomObjectId(fileType);
 
 		ImportCustomDataObjectHelper cdoHelper = new ImportCustomDataObjectHelper(
-				eloqua.getSite(), eloqua.getUser(), eloqua.getPassword(), eloqua.getSite());
+				eloqua.getSite(), eloqua.getUser(), eloqua.getPassword(), eloqua.getBaseUrl());
 
 			Map<String, String> importFields = null;
 			
@@ -73,6 +74,7 @@ public class AIAService {
 
 						if (syncResult != null
 								&& syncResult.getElements() != null) {
+							status=0;
 							List<SyncResult> results = syncResult.getElements();
 							for (SyncResult syncRes : results) {
 								if (Constants.ELQ_ERROR
@@ -90,7 +92,7 @@ public class AIAService {
 			
 
 		} 
-
+			return status;
 	}
 	
 	

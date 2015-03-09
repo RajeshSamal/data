@@ -24,15 +24,36 @@ import com.aia.model.HKAchieveGold;
 
 public class FileToObjectList {
 
+	//input:HK-ACHIEVE_GOLD-554335.csv-output: HK-ACHIEVE_GOLD
 	private static String getFileNameFromClassName(String fileName) {
-		int lastIndexOfHypen = fileName.lastIndexOf("-");
-		int lastIndexOfSlash = fileName.lastIndexOf("\\");
-		String classMapName = fileName.substring(lastIndexOfSlash + 1,
-				lastIndexOfHypen);
-		return classMapName;
+		String classMapName ="";
+		try{
+			int lastIndexOfHypen = fileName.lastIndexOf("-");
+			int lastIndexOfSlash = fileName.lastIndexOf("\\");
+			classMapName = fileName.substring(lastIndexOfSlash + 1,
+					lastIndexOfHypen);
+			return classMapName;
+
+		}
+		catch(Exception e){
+			return classMapName;
+		}
+				
+	}
+	
+
+	private static boolean isFileValid(String fileName){
+		boolean value=false;
+		String fileTypeIncoming =getFileNameFromClassName(fileName);
+		for(String Filetype: DataInputProcessor.fileTypeList){
+			if(fileTypeIncoming!=null && fileTypeIncoming.equals(Filetype)){
+				value=true;
+			}
+		}
+		return value;
 	}
 
-	//input:HK-ACHIEVE_GOLD-554335.csv
+	//input:HK-ACHIEVE_GOLD-554335.csv-output Class Object
 	public static Class getFileClass(String fileName) {
 
 		Class fileClass = null;
@@ -48,7 +69,7 @@ public class FileToObjectList {
 		return fileClass;
 
 	}
-	//input : HK-ACHIEVE_GOLD
+	//input : HK-ACHIEVE_GOLD-output Class Object
 	public static Class getClassFromFile(String fileName) {
 
 		Class fileClass = null;
@@ -163,9 +184,9 @@ public class FileToObjectList {
 		return objectList;
 	}
 
-	private static int[] processFile(String fileName, Session session) {
-		Class fileClass = getFileClass(fileName);
-		List recordObjectList = fileToRecordList(fileName, fileClass);
+	private static int[] processFile(String fileNameWithDir, Session session, String fileName) {
+		Class fileClass = getFileClass(fileNameWithDir);
+		List recordObjectList = fileToRecordList(fileNameWithDir, fileClass);
 		List safeToSave = HandleDuplicates.handleDuplicate(recordObjectList,fileClass);
 		saveToDatBase(safeToSave, fileClass, session,fileName);
 		int[] records = new int[2];
@@ -192,12 +213,12 @@ public class FileToObjectList {
 		File[] listOfFiles = folder.listFiles();
 		for (int i = 0; i < listOfFiles.length; i++) {
 			try {
-				if (listOfFiles[i].isFile() && (!(DataInputProcessor.fileDAO.isFileProcessed(listOfFiles[i].getName())))) {
+				if (isFileValid(listOfFiles[i].getName()) && listOfFiles[i].isFile() && (!(DataInputProcessor.fileDAO.isFileProcessed(listOfFiles[i].getName())))) {
 					session = sqlSessionFactory.openSession();
 					tx = session.beginTransaction();
 					int[] records =processFile(
 							localDirectory + "\\" + listOfFiles[i].getName(),
-							session);
+							session, listOfFiles[i].getName());
 					dataFile= new DataFile();
 					dataFile.setFielName(listOfFiles[i].getName());
 					dataFile.setProcessDate(new Date());

@@ -2,10 +2,8 @@ package com.aia.data;
 
 import java.io.IOException;
 import java.io.InputStream;
-import java.util.ArrayList;
 import java.util.Enumeration;
 import java.util.HashMap;
-import java.util.List;
 import java.util.Map;
 import java.util.Properties;
 
@@ -30,7 +28,7 @@ public class DataInputProcessor {
 	public static EloquaDao eloquaDao;
 	public static FTPDao ftpDao;
 	public static CustomObjectDao customDao;
-	private static String[] fileTypeList= {"HK-ACHIEVE_GOLD"};
+	public static String[] fileTypeList= {"HK-ACHIEVE_GOLD"};
 
 	static {
 		hkagDAO = new HkagDAO();
@@ -78,12 +76,14 @@ public class DataInputProcessor {
 	static {
 		fileMap.put("HK-ACHIEVE_GOLD", HKAchieveGoldColumnMap);
 	}
+	
 
 	public static void startProcessing() {
-		FTPConnect.processFTP(localDirectory);
+		//FTPConnect.processFTP(localDirectory);
 		FileToObjectList.processAllFilesToDB(localDirectory);
 		for (String key:fileTypeList){
 			DataOutputProcessor.sendToElqua(key);
+			DataOutputProcessor.sendDistinctDuplicateToElqua(key);
 		}
 		
 

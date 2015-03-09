@@ -1,5 +1,8 @@
 package com.aia.dao;
 
+import java.text.DateFormat;
+import java.text.SimpleDateFormat;
+import java.util.Calendar;
 import java.util.Date;
 import java.util.List;
 
@@ -63,11 +66,25 @@ public class HkagDAO {
 		return hkagList;
 
 	}
+	
+	
+	public List getDistnctDuplicates() {
+		Session session = sqlSessionFactory.openSession();
+		Transaction tx = session.beginTransaction();
+		String hql = "from HKAchieveGold where recordStatus= :status and processDate!= :processDate";
+		Query query = session.createQuery(hql);
+		query.setParameter("status", Constants.RECORD_DUPLICATE);
+		query.setParameter("processDate", new Date());
+		List<HKAchieveGold> hkagList = query.list();
+		tx.commit();
+		session.close();
+		return hkagList;
+
+	}
 
 	public void insertList(Session session, List<HKAchieveGold> objectList,String fileName) {
 		int count = 0;
-
-		
+	       
 		for (HKAchieveGold hkag : objectList) {
 			hkag.setProcessDate(new Date());
 			hkag.setLastModifiedDate(new Date());
