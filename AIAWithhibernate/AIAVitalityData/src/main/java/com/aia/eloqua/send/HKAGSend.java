@@ -41,17 +41,15 @@ public class HKAGSend {
 					.getDistnctDuplicates();
 			Set<HKAchieveGold> duplicateSet = new HashSet<HKAchieveGold>(
 					objectList);
-			List<HKAchieveGold> list = new ArrayList<HKAchieveGold>(duplicateSet);
 
-			for (int i = 0; i < list.size(); i++) {
-			
-				HKAG = list.get(i);
+			Iterator<HKAchieveGold> iter = duplicateSet.iterator();
+
+			while (iter.hasNext()) {
+				HKAG = iter.next();
 				//comment: below status change may not require.
-				//HKAG.setRecordStatus(Constants.RECORD_SENT);
+				HKAG.setRecordStatus(Constants.RECORD_SENT);
 				CDODetails cdoData = HKAGProcess.processHKAG(HKAG);
 				cdoDetailsList.add(cdoData);
-				
-				//move this section to if satus=0
 				List<DataFile> fileList = DataInputProcessor.fileDAO.get(HKAG.getFileName());
 				if(fileList.size()>0){
 					DataFile file = fileList.get(0);
@@ -62,12 +60,12 @@ public class HKAGSend {
 			}
 			int status = AIAService.syncDataToEloqua(cdoDetailsList, fileType);
 			if (status == 0) {
-				for (int i = 0; i < list.size(); i++) {
-					HKAG = (HKAchieveGold) list.get(i);
+				for (int i = 0; i < objectList.size(); i++) {
+					HKAG = (HKAchieveGold) objectList.get(i);
 					HKAG.setRecordStatus(Constants.RECORD_PROCESSED);
 				}
 			}
-			
+			List<HKAchieveGold> list = new ArrayList<HKAchieveGold>(duplicateSet);
 			DataInputProcessor.hkagDAO.updateList(list, session);
 
 			tx.commit();
