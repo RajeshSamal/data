@@ -15,6 +15,8 @@ import com.aia.dao.DbConnectionFactory;
 import com.aia.data.DataInputProcessor;
 import com.aia.eloqua.process.HKAPProcess;
 import com.aia.model.CDODetails;
+import com.aia.model.DataFile;
+import com.aia.model.HKAchieveGold;
 import com.aia.model.HKAchievePlatinum;
 import com.aia.service.AIAService;
 
@@ -47,6 +49,12 @@ public class HKAPSend {
 				HKAP.setRecordStatus(Constants.RECORD_SENT);
 				CDODetails cdoData = HKAPProcess.processHKAP(HKAP);
 				cdoDetailsList.add(cdoData);
+				List<DataFile> fileList = DataInputProcessor.fileDAO.get(HKAP.getFileName());
+				if(fileList.size()>0){
+					DataFile file = fileList.get(0);
+					file.setDuplicateRecords(file.getDuplicateRecords()-1);
+					DataInputProcessor.fileDAO.update(file, session);
+				}
 
 			}
 			int status = AIAService.syncDataToEloqua(cdoDetailsList, fileType);
@@ -56,7 +64,8 @@ public class HKAPSend {
 					HKAP.setRecordStatus(Constants.RECORD_PROCESSED);
 				}
 			}
-			DataInputProcessor.hkapDAO.updateList(objectList, session);
+			List<HKAchievePlatinum> list = new ArrayList<HKAchievePlatinum>(duplicateSet);
+			DataInputProcessor.hkapDAO.updateList(list, session);
 
 			tx.commit();
 		} catch (Exception e) {

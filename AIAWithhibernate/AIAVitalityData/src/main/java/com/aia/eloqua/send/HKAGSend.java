@@ -1,6 +1,7 @@
 package com.aia.eloqua.send;
 
 import java.util.ArrayList;
+import java.util.Collections;
 import java.util.HashSet;
 import java.util.Iterator;
 import java.util.List;
@@ -15,6 +16,7 @@ import com.aia.dao.DbConnectionFactory;
 import com.aia.data.DataInputProcessor;
 import com.aia.eloqua.process.HKAGProcess;
 import com.aia.model.CDODetails;
+import com.aia.model.DataFile;
 import com.aia.model.HKAchieveGold;
 import com.aia.service.AIAService;
 
@@ -44,9 +46,16 @@ public class HKAGSend {
 
 			while (iter.hasNext()) {
 				HKAG = iter.next();
+				//comment: below status change may not require.
 				HKAG.setRecordStatus(Constants.RECORD_SENT);
 				CDODetails cdoData = HKAGProcess.processHKAG(HKAG);
 				cdoDetailsList.add(cdoData);
+				List<DataFile> fileList = DataInputProcessor.fileDAO.get(HKAG.getFileName());
+				if(fileList.size()>0){
+					DataFile file = fileList.get(0);
+					file.setDuplicateRecords(file.getDuplicateRecords()-1);
+					DataInputProcessor.fileDAO.update(file, session);
+				}
 
 			}
 			int status = AIAService.syncDataToEloqua(cdoDetailsList, fileType);
@@ -56,7 +65,8 @@ public class HKAGSend {
 					HKAG.setRecordStatus(Constants.RECORD_PROCESSED);
 				}
 			}
-			DataInputProcessor.hkagDAO.updateList(objectList, session);
+			List<HKAchieveGold> list = new ArrayList<HKAchieveGold>(duplicateSet);
+			DataInputProcessor.hkagDAO.updateList(list, session);
 
 			tx.commit();
 		} catch (Exception e) {
@@ -89,6 +99,7 @@ public class HKAGSend {
 			for (int i = 0; i < objectList.size(); i++) {
 
 				HKAG = (HKAchieveGold) objectList.get(i);
+				//comment: below status change may not require.
 				HKAG.setRecordStatus(Constants.RECORD_SENT);
 				CDODetails cdoData = HKAGProcess.processHKAG(HKAG);
 				cdoDetailsList.add(cdoData);
