@@ -11,19 +11,14 @@ import javax.persistence.Table;
 import javax.persistence.Temporal;
 import javax.persistence.TemporalType;
 
-import com.aia.common.utils.Constants;
-
-/**
- * HkAchieveGold class
- */
 @Entity
-@Table(name = "HK_ACHIEVE_GOLD")
-public class HKAchieveGold implements CommonModel,CommonDBColumn {
+@Table(name = "HK_ENGAGEMENT_REMINDER1")
+public class HKEngagementReminder1 implements CommonModel,CommonDBColumn{
 
 	@Id
-	@Column(name = "HK_ACHIEVE_GOLD_ID")
+	@Column(name = "HK_ENGAGEMENT_REMINDER1_ID")
 	@GeneratedValue(strategy = GenerationType.AUTO)
-	private int hkAchieveGoldId;
+	private int hkEngagementReminder1Id;
 	@Column(name = "MEMBER_FIRST_NAMES")
 	private String memberFirstNames;
 	@Column(name = "MEMBER_SURNAME")
@@ -34,21 +29,10 @@ public class HKAchieveGold implements CommonModel,CommonDBColumn {
 	private String aiaVitalityMemberNumber;
 	@Column(name = "ENTITY_REFERENCE_NUMBER")
 	private String entityReferenceNumber;
-	@Column(name = "LANGUAGE_PREFERENCE")
-	private String languagePreference;
-	@Column(name = "RECORD_STATUS")
-	private String recordStatus;
-	@Column(name = "PROCESS_DATE")
-	@Temporal(TemporalType.DATE)
-	private Date processDate;
-	@Column(name = "VITALITY_STATUS")
-	private String vitalityStatus;
-	@Column(name = "POINTS_BALANCE")
-	private String pointsBalance;
-	@Column(name = "GENDER")
-	private String gender;
 	@Column(name = "CLIENT_ID")
 	private String clientId;
+	@Column(name = "LANGUAGE_PREFERENCE")
+	private String languagePreference;
 	@Column(name = "RECORD_ID")
 	private String recordId;
 	@Column(name = "FILE_TYPE")
@@ -58,10 +42,23 @@ public class HKAchieveGold implements CommonModel,CommonDBColumn {
 	@Column(name = "LAST_MODIFIED_DATE")
 	@Temporal(TemporalType.DATE)
 	private Date lastModifiedDate;
+	@Column(name = "RECORD_STATUS")
+	private String recordStatus;
+	@Column(name = "PROCESS_DATE")
+	@Temporal(TemporalType.DATE)
+	private Date processDate;
 
-	public HKAchieveGold() {
+	public HKEngagementReminder1() {
 	}
 
+	public int getHkEngagementReminder1Id() {
+		return hkEngagementReminder1Id;
+	}
+
+	public void setHkEngagementReminder1Id(int hkEngagementReminder1Id) {
+		this.hkEngagementReminder1Id = hkEngagementReminder1Id;
+	}
+	
 	public String getMemberFirstNames() {
 		return this.memberFirstNames;
 	}
@@ -135,27 +132,24 @@ public class HKAchieveGold implements CommonModel,CommonDBColumn {
 	}
 
 	public String getVitalityStatus() {
-		return vitalityStatus;
+		return "";
 	}
 
 	public void setVitalityStatus(String vitalityStatus) {
-		this.vitalityStatus = vitalityStatus;
 	}
 
 	public String getPointsBalance() {
-		return pointsBalance;
+		return "";
 	}
 
 	public void setPointsBalance(String pointsBalance) {
-		this.pointsBalance = pointsBalance;
 	}
 
 	public String getGender() {
-		return gender;
+		return "";
 	}
 
 	public void setGender(String gender) {
-		this.gender = gender;
 	}
 
 	public String getClientId() {
@@ -164,14 +158,6 @@ public class HKAchieveGold implements CommonModel,CommonDBColumn {
 
 	public void setClientId(String clientId) {
 		this.clientId = clientId;
-	}
-
-	public int getHkAchieveGoldId() {
-		return hkAchieveGoldId;
-	}
-
-	public void setHkAchieveGoldId(int hkAchieveGoldId) {
-		this.hkAchieveGoldId = hkAchieveGoldId;
 	}
 
 	public String getFileType() {
@@ -201,8 +187,8 @@ public class HKAchieveGold implements CommonModel,CommonDBColumn {
 	@Override
 	public boolean equals(Object other) {
 		boolean result = false;
-		if (other instanceof HKAchieveGold) {
-			HKAchieveGold that = (HKAchieveGold) other;
+		if (other instanceof HKEngagementReminder1) {
+			HKEngagementReminder1 that = (HKEngagementReminder1) other;
 			if(this.getEmailAddress() !=null){
 				result = (this.getEmailAddress().equalsIgnoreCase(that
 						.getEmailAddress()));

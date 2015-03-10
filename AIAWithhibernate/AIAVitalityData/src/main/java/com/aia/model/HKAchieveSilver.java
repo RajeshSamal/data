@@ -17,8 +17,8 @@ import com.aia.common.utils.Constants;
  * HkAchieveGold class
  */
 @Entity
-@Table(name = "hk_achieve_silver")
-public class HKAchieveSilver implements CommonModel {
+@Table(name = "HK_ACHIEVE_SILVER")
+public class HKAchieveSilver implements CommonModel,CommonDBColumn {
 
 	@Id
 	@Column(name = "HK_ACHIEVE_SILVER_ID")

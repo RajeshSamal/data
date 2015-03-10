@@ -22,7 +22,7 @@ public class HkasDAO {
 
 		Session session = sqlSessionFactory.openSession();
 		Transaction tx = session.beginTransaction();
-		session.save(hkas);
+		session.update(hkas);
 		tx.commit();
 		session.close();
 

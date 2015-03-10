@@ -12,14 +12,13 @@ import org.hibernate.Transaction;
 import com.aia.common.utils.Constants;
 import com.aia.dao.DbConnectionFactory;
 import com.aia.data.DataInputProcessor;
-import com.aia.eloqua.process.HKASProcess;
+import com.aia.eloqua.process.HKER3Process;
 import com.aia.model.CDODetails;
 import com.aia.model.DataFile;
-import com.aia.model.HKAchievePlatinum;
-import com.aia.model.HKAchieveSilver;
+import com.aia.model.HKEngagementReminder3;
 import com.aia.service.AIAService;
 
-public class HKASSend {
+public class HKER3Send {
 
 	public static void sendDistinctDuplicateToElqua() {
 
@@ -31,41 +30,38 @@ public class HKASSend {
 		try {
 
 			List<CDODetails> cdoDetailsList = new ArrayList<CDODetails>();
-			HKAchieveSilver HKAS = null;
+			HKEngagementReminder3 HKER3 = null;
 			String fileType = null;
 			session = sqlSessionFactory.openSession();
 			tx = session.beginTransaction();
-			fileType = Constants.HK_SILVER_ARCHIVE;
-			List<HKAchieveSilver> objectList = DataInputProcessor.hkasDAO
+			fileType = Constants.HK_ENGAGEMENT_REMINDER3;
+			List<HKEngagementReminder3> objectList = DataInputProcessor.hker3DAO
 					.getDistnctDuplicates();
-			Set<HKAchieveSilver> duplicateSet = new HashSet<HKAchieveSilver>(
+			Set<HKEngagementReminder3> duplicateSet = new HashSet<HKEngagementReminder3>(
 					objectList);
-			List<HKAchieveSilver> list = new ArrayList<HKAchieveSilver>(
-					duplicateSet);
+			List<HKEngagementReminder3> list = new ArrayList<HKEngagementReminder3>(duplicateSet);
 
 			for (int i = 0; i < list.size(); i++) {
-				HKAS = list.get(i);
-				// HKAS.setRecordStatus(Constants.RECORD_SENT);
-				CDODetails cdoData = HKASProcess.processHKAS(HKAS);
+			
+				HKER3 = list.get(i);
+				CDODetails cdoData = HKER3Process.processHKER3(HKER3);
 				cdoDetailsList.add(cdoData);
-
 			}
 			int status = AIAService.syncDataToEloqua(cdoDetailsList, fileType);
 			if (status == 0) {
 				for (int i = 0; i < list.size(); i++) {
-					HKAS = (HKAchieveSilver) list.get(i);
-					HKAS.setRecordStatus(Constants.RECORD_PROCESSED);
-					List<DataFile> fileList = DataInputProcessor.fileDAO
-							.get(HKAS.getFileName());
-					if (fileList.size() > 0) {
+					HKER3 = (HKEngagementReminder3) list.get(i);
+					HKER3.setRecordStatus(Constants.RECORD_PROCESSED);
+					List<DataFile> fileList = DataInputProcessor.fileDAO.get(HKER3.getFileName());
+					if(fileList.size()>0){
 						DataFile file = fileList.get(0);
-						file.setDuplicateRecords(file.getDuplicateRecords() - 1);
+						file.setDuplicateRecords(file.getDuplicateRecords()-1);
 						DataInputProcessor.fileDAO.update(file);
 					}
 				}
 			}
-
-			DataInputProcessor.hkasDAO.updateList(list, session);
+			
+			DataInputProcessor.hker3DAO.updateList(list, session);
 
 			tx.commit();
 		} catch (Exception e) {
@@ -87,30 +83,29 @@ public class HKASSend {
 		try {
 
 			List<CDODetails> cdoDetailsList = new ArrayList<CDODetails>();
-			HKAchieveSilver HKAS = null;
+			HKEngagementReminder3 HKER3 = null;
 			String fileType = null;
 			session = sqlSessionFactory.openSession();
 			tx = session.beginTransaction();
-			fileType = Constants.HK_SILVER_ARCHIVE;
-			List<HKAchieveSilver> objectList = DataInputProcessor.hkasDAO
+			fileType = Constants.HK_ENGAGEMENT_REMINDER1;
+			List<HKEngagementReminder3> objectList = DataInputProcessor.hker1DAO
 					.getListAsStatus(Constants.RECORD_SAVED);
 
 			for (int i = 0; i < objectList.size(); i++) {
 
-				HKAS = (HKAchieveSilver) objectList.get(i);
-				//HKAS.setRecordStatus(Constants.RECORD_SENT);
-				CDODetails cdoData = HKASProcess.processHKAS(HKAS);
+				HKER3 = (HKEngagementReminder3) objectList.get(i);
+				CDODetails cdoData =  HKER3Process.processHKER3(HKER3);
 				cdoDetailsList.add(cdoData);
 			}
 
 			int status = AIAService.syncDataToEloqua(cdoDetailsList, fileType);
 			if (status == 0) {
 				for (int i = 0; i < objectList.size(); i++) {
-					HKAS = (HKAchieveSilver) objectList.get(i);
-					HKAS.setRecordStatus(Constants.RECORD_PROCESSED);
+					HKER3 = (HKEngagementReminder3) objectList.get(i);
+					HKER3.setRecordStatus(Constants.RECORD_PROCESSED);
 				}
 			}
-			DataInputProcessor.hkasDAO.updateList(objectList, session);
+			DataInputProcessor.hker3DAO.updateList(objectList, session);
 
 			tx.commit();
 		} catch (Exception e) {

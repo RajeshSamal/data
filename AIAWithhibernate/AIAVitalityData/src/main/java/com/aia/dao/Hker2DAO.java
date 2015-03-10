@@ -9,29 +9,29 @@ import org.hibernate.SessionFactory;
 import org.hibernate.Transaction;
 
 import com.aia.common.utils.Constants;
-import com.aia.model.HKAchievePlatinum;;
+import com.aia.model.HKEngagementReminder2;
 
-public class HkapDAO {
+public class Hker2DAO {
 
 	private SessionFactory sqlSessionFactory;
 
-	public HkapDAO() {
+	public Hker2DAO() {
 		sqlSessionFactory = DbConnectionFactory.getSessionFactory();
 	}
-	public void update(HKAchievePlatinum hkap) {
+	public void update(HKEngagementReminder2 hker2) {
 
 		Session session = sqlSessionFactory.openSession();
 		Transaction tx = session.beginTransaction();
-		session.update(hkap);
+		session.update(hker2);
 		tx.commit();
 		session.close();
 
 	}
 
-	public void insert(HKAchievePlatinum hkap) {
+	public void insert(HKEngagementReminder2 hker2) {
 		Session session = sqlSessionFactory.openSession();
 		Transaction tx = session.beginTransaction();
-		session.save(hkap);
+		session.save(hker2);
 		tx.commit();
 		session.close();
 
@@ -40,12 +40,12 @@ public class HkapDAO {
 	public List getAllList() {
 		Session session = sqlSessionFactory.openSession();
 		Transaction tx = session.beginTransaction();
-		String hql = "from HKAchievePlatinum";
+		String hql = "from HKEngagementReminder2";
 		Query query = session.createQuery(hql);
-		List<HKAchievePlatinum> hkapList = query.list();
+		List<HKEngagementReminder2> hker2List = query.list();
 		tx.commit();
 		session.close();
-		return hkapList;
+		return hker2List;
 
 	}
 	
@@ -54,13 +54,13 @@ public class HkapDAO {
 	public List getListAsStatus(String status) {
 		Session session = sqlSessionFactory.openSession();
 		Transaction tx = session.beginTransaction();
-		String hql = "from HKAchievePlatinum where recordStatus= :status";
+		String hql = "from HKEngagementReminder2 where recordStatus= :status";
 		Query query = session.createQuery(hql);
 		query.setParameter("status", status);
-		List<HKAchievePlatinum> hkapList = query.list();
+		List<HKEngagementReminder2> hker2List = query.list();
 		tx.commit();
 		session.close();
-		return hkapList;
+		return hker2List;
 
 	}
 	
@@ -68,26 +68,26 @@ public class HkapDAO {
 	public List getDistnctDuplicates() {
 		Session session = sqlSessionFactory.openSession();
 		Transaction tx = session.beginTransaction();
-		String hql = "from HKAchievePlatinum where recordStatus= :status and processDate!= :processDate";
+		String hql = "from HKEngagementReminder2 where recordStatus= :status and processDate!= :processDate";
 		Query query = session.createQuery(hql);
 		query.setParameter("status", Constants.RECORD_DUPLICATE);
 		query.setParameter("processDate", new Date());
-		List<HKAchievePlatinum> hkapList = query.list();
+		List<HKEngagementReminder2> hker2List = query.list();
 		tx.commit();
 		session.close();
-		return hkapList;
+		return hker2List;
 
 	}
 
-	public void insertList(Session session, List<HKAchievePlatinum> objectList,String fileName) {
+	public void insertList(Session session, List<HKEngagementReminder2> objectList,String fileName) {
 		int count = 0;
 	       
-		for (HKAchievePlatinum hkap : objectList) {
-			hkap.setProcessDate(new Date());
-			hkap.setLastModifiedDate(new Date());
-			hkap.setFileType(Constants.HK_PLATINUM_ARCHIVE);
-			hkap.setFileName(fileName);
-			session.save(hkap);
+		for (HKEngagementReminder2 hker2 : objectList) {
+			hker2.setProcessDate(new Date());
+			hker2.setLastModifiedDate(new Date());
+			hker2.setFileType(Constants.HK_ENGAGEMENT_REMINDER2);
+			hker2.setFileName(fileName);
+			session.save(hker2);
 			if (++count % 50 == 0) {
 				session.flush();
 				session.clear();
@@ -96,12 +96,12 @@ public class HkapDAO {
 		}
 		
 	}
-	public void updateList(List<HKAchievePlatinum> objectList,Session session) {
+	public void updateList(List<HKEngagementReminder2> objectList,Session session) {
 		int count = 0;
 
-		for (HKAchievePlatinum hkap : objectList) {
-			hkap.setLastModifiedDate(new Date());
-			session.update(hkap);
+		for (HKEngagementReminder2 hker2 : objectList) {
+			hker2.setLastModifiedDate(new Date());
+			session.update(hker2);
 			if (++count % 50 == 0) {
 				session.flush();
 				session.clear();

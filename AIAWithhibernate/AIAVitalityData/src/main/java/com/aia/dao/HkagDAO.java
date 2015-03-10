@@ -22,7 +22,7 @@ public class HkagDAO {
 
 		Session session = sqlSessionFactory.openSession();
 		Transaction tx = session.beginTransaction();
-		session.save(hkag);
+		session.update(hkag);
 		tx.commit();
 		session.close();
 

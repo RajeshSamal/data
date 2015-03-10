@@ -158,6 +158,8 @@ public class FileToObjectList {
 
 		try {
 			recordList = csvr.readAll();
+			fr.close();
+			csvr.close();
 			itr = recordList.iterator();
 			if (itr.hasNext()) {
 				headerRow = (String[]) itr.next();
@@ -181,6 +183,7 @@ public class FileToObjectList {
 		} catch (IOException e1) {
 			e1.printStackTrace();
 		}
+		
 		return objectList;
 	}
 
@@ -207,6 +210,15 @@ public class FileToObjectList {
 		else if (fileClass.getName().equalsIgnoreCase("com.aia.model.HKAchieveSilver")) {
 			DataInputProcessor.hkasDAO.insertList(session, objectList,fileName);
 		}
+		else if (fileClass.getName().equalsIgnoreCase("com.aia.model.HKEngagementReminder1")) {
+			DataInputProcessor.hker1DAO.insertList(session, objectList,fileName);
+		}
+		else if (fileClass.getName().equalsIgnoreCase("com.aia.model.HKEngagementReminder2")) {
+			DataInputProcessor.hker2DAO.insertList(session, objectList,fileName);
+		}
+		else if (fileClass.getName().equalsIgnoreCase("com.aia.model.HKEngagementReminder3")) {
+			DataInputProcessor.hker3DAO.insertList(session, objectList,fileName);
+		}
 
 	}
 
@@ -231,7 +243,6 @@ public class FileToObjectList {
 					dataFile.setTotalRecords(records[0]);
 					dataFile.setDuplicateRecords(records[1]);
 					DataInputProcessor.fileDAO.insert(dataFile,session);
-					String key = localDirectory + "\\" + listOfFiles[i].getName();
 					tx.commit();
 					FTPConnect.moveToBackUp(localDirectory,
 							listOfFiles[i].getName());

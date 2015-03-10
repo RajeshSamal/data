@@ -16,8 +16,8 @@ import javax.persistence.TemporalType;
  * HkAchievePlatinum class
  */
 @Entity
-@Table(name = "hk_achieve_platinum")
-public class HKAchievePlatinum implements CommonModel {
+@Table(name = "HK_ACHIEVE_PLATINUM")
+public class HKAchievePlatinum implements CommonModel,CommonDBColumn {
 
 	@Id
 	@Column(name = "HK_ACHIEVE_PLATINUM_ID")
