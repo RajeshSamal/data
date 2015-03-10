@@ -98,7 +98,7 @@ public class HKAPSend {
 			for (int i = 0; i < objectList.size(); i++) {
 
 				HKAP = (HKAchievePlatinum) objectList.get(i);
-				HKAP.setRecordStatus(Constants.RECORD_SENT);
+				//HKAP.setRecordStatus(Constants.RECORD_SENT);
 				CDODetails cdoData = HKAPProcess.processHKAP(HKAP);
 				cdoDetailsList.add(cdoData);
 			}

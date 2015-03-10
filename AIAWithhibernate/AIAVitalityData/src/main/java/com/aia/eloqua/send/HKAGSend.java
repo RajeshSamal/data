@@ -99,7 +99,7 @@ public class HKAGSend {
 
 				HKAG = (HKAchieveGold) objectList.get(i);
 				//comment: below status change may not require.
-				HKAG.setRecordStatus(Constants.RECORD_SENT);
+				//HKAG.setRecordStatus(Constants.RECORD_SENT);
 				CDODetails cdoData = HKAGProcess.processHKAG(HKAG);
 				cdoDetailsList.add(cdoData);
 			}
