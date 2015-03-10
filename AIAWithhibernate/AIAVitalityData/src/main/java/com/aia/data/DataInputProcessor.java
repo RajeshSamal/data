@@ -112,7 +112,7 @@ public class DataInputProcessor {
 	
 
 	public static void startProcessing() {
-		//FTPConnect.processFTP(localDirectory);
+		FTPConnect.processFTP(localDirectory);
 		FileToObjectList.processAllFilesToDB(localDirectory);
 		for (String key:fileTypeList){
 			DataOutputProcessor.sendToElqua(key);

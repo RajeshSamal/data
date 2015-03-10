@@ -41,20 +41,14 @@ public class HKASSend {
 					.getDistnctDuplicates();
 			Set<HKAchieveSilver> duplicateSet = new HashSet<HKAchieveSilver>(
 					objectList);
-			List<HKAchieveSilver> list = new ArrayList<HKAchieveSilver>(duplicateSet);
-
+			List<HKAchieveSilver> list = new ArrayList<HKAchieveSilver>(
+					duplicateSet);
 
 			for (int i = 0; i < list.size(); i++) {
 				HKAS = list.get(i);
-				//HKAS.setRecordStatus(Constants.RECORD_SENT);
+				// HKAS.setRecordStatus(Constants.RECORD_SENT);
 				CDODetails cdoData = HKASProcess.processHKAS(HKAS);
 				cdoDetailsList.add(cdoData);
-				List<DataFile> fileList = DataInputProcessor.fileDAO.get(HKAS.getFileName());
-				if(fileList.size()>0){
-					DataFile file = fileList.get(0);
-					file.setDuplicateRecords(file.getDuplicateRecords()-1);
-					DataInputProcessor.fileDAO.update(file, session);
-				}
 
 			}
 			int status = AIAService.syncDataToEloqua(cdoDetailsList, fileType);
@@ -62,9 +56,16 @@ public class HKASSend {
 				for (int i = 0; i < list.size(); i++) {
 					HKAS = (HKAchieveSilver) list.get(i);
 					HKAS.setRecordStatus(Constants.RECORD_PROCESSED);
+					List<DataFile> fileList = DataInputProcessor.fileDAO
+							.get(HKAS.getFileName());
+					if (fileList.size() > 0) {
+						DataFile file = fileList.get(0);
+						file.setDuplicateRecords(file.getDuplicateRecords() - 1);
+						DataInputProcessor.fileDAO.update(file);
+					}
 				}
 			}
-			
+
 			DataInputProcessor.hkasDAO.updateList(list, session);
 
 			tx.commit();

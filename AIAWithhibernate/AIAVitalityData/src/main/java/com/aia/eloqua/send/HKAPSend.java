@@ -49,19 +49,19 @@ public class HKAPSend {
 				//HKAP.setRecordStatus(Constants.RECORD_SENT);
 				CDODetails cdoData = HKAPProcess.processHKAP(HKAP);
 				cdoDetailsList.add(cdoData);
-				List<DataFile> fileList = DataInputProcessor.fileDAO.get(HKAP.getFileName());
-				if(fileList.size()>0){
-					DataFile file = fileList.get(0);
-					file.setDuplicateRecords(file.getDuplicateRecords()-1);
-					DataInputProcessor.fileDAO.update(file, session);
-				}
-
 			}
 			int status = AIAService.syncDataToEloqua(cdoDetailsList, fileType);
 			if (status == 0) {
 				for (int i = 0; i < list.size(); i++) {
 					HKAP = (HKAchievePlatinum) list.get(i);
 					HKAP.setRecordStatus(Constants.RECORD_PROCESSED);
+					List<DataFile> fileList = DataInputProcessor.fileDAO.get(HKAP.getFileName());
+					if (fileList.size() > 0) {
+						DataFile file = fileList.get(0);
+						file.setDuplicateRecords(file.getDuplicateRecords() - 1);
+						DataInputProcessor.fileDAO.update(file);
+					}
+
 				}
 			}
 			

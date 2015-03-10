@@ -50,21 +50,18 @@ public class HKAGSend {
 				//HKAG.setRecordStatus(Constants.RECORD_SENT);
 				CDODetails cdoData = HKAGProcess.processHKAG(HKAG);
 				cdoDetailsList.add(cdoData);
-				
-				//move this section to if satus=0
-				List<DataFile> fileList = DataInputProcessor.fileDAO.get(HKAG.getFileName());
-				if(fileList.size()>0){
-					DataFile file = fileList.get(0);
-					file.setDuplicateRecords(file.getDuplicateRecords()-1);
-					DataInputProcessor.fileDAO.update(file, session);
-				}
-
 			}
 			int status = AIAService.syncDataToEloqua(cdoDetailsList, fileType);
 			if (status == 0) {
 				for (int i = 0; i < list.size(); i++) {
 					HKAG = (HKAchieveGold) list.get(i);
 					HKAG.setRecordStatus(Constants.RECORD_PROCESSED);
+					List<DataFile> fileList = DataInputProcessor.fileDAO.get(HKAG.getFileName());
+					if(fileList.size()>0){
+						DataFile file = fileList.get(0);
+						file.setDuplicateRecords(file.getDuplicateRecords()-1);
+						DataInputProcessor.fileDAO.update(file);
+					}
 				}
 			}
 			

@@ -18,9 +18,23 @@ public class DataFileDao {
 		sqlSessionFactory = DbConnectionFactory.getSessionFactory();
 	}
 
-	public void update(DataFile dataFile, Session session) {
+	public void update(DataFile dataFile) {
+		Session session =null;
 
-		session.update(dataFile);
+		
+		
+		try{
+			session = sqlSessionFactory.openSession();
+			Transaction tx = session.beginTransaction();
+			session.update(dataFile);
+			tx.commit();
+		}
+		finally{
+			if(session != null){
+				session.close();
+			}
+			
+		}
 
 	}
 
