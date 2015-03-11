@@ -17,8 +17,17 @@ import org.hibernate.SessionFactory;
 import org.hibernate.Transaction;
 
 import com.aia.common.utils.CSVReader;
+import com.aia.common.utils.Constants;
 import com.aia.common.utils.FTPConnect;
+import com.aia.dao.DataFileDao;
 import com.aia.dao.DbConnectionFactory;
+import com.aia.dao.FTPDao;
+import com.aia.dao.HkagDAO;
+import com.aia.dao.HkapDAO;
+import com.aia.dao.HkasDAO;
+import com.aia.dao.Hker1DAO;
+import com.aia.dao.Hker2DAO;
+import com.aia.dao.Hker3DAO;
 import com.aia.model.DataFile;
 import com.aia.model.HKAchieveGold;
 
@@ -202,22 +211,22 @@ public class FileToObjectList {
 	private static void saveToDatBase(List objectList, Class fileClass,Session session,String fileName) {
 		
 		if (fileClass.getName().equalsIgnoreCase("com.aia.model.HKAchieveGold")) {
-			DataInputProcessor.hkagDAO.insertList(session, objectList,fileName);
+			((HkagDAO)(DataInputProcessor.getDao(Constants.HK_GOLD_ARCHIVE))).insertList(session, objectList,fileName);
 		}
 		else if (fileClass.getName().equalsIgnoreCase("com.aia.model.HKAchievePlatinum")) {
-			DataInputProcessor.hkapDAO.insertList(session, objectList,fileName);
+			((HkapDAO)(DataInputProcessor.getDao(Constants.HK_PLATINUM_ARCHIVE))).insertList(session, objectList,fileName);
 		}
 		else if (fileClass.getName().equalsIgnoreCase("com.aia.model.HKAchieveSilver")) {
-			DataInputProcessor.hkasDAO.insertList(session, objectList,fileName);
+			((HkasDAO)(DataInputProcessor.getDao(Constants.HK_SILVER_ARCHIVE))).insertList(session, objectList,fileName);
 		}
 		else if (fileClass.getName().equalsIgnoreCase("com.aia.model.HKEngagementReminder1")) {
-			DataInputProcessor.hker1DAO.insertList(session, objectList,fileName);
+			((Hker1DAO)(DataInputProcessor.getDao(Constants.HK_ENGAGEMENT_REMINDER1))).insertList(session, objectList,fileName);
 		}
 		else if (fileClass.getName().equalsIgnoreCase("com.aia.model.HKEngagementReminder2")) {
-			DataInputProcessor.hker2DAO.insertList(session, objectList,fileName);
+			((Hker2DAO)(DataInputProcessor.getDao(Constants.HK_ENGAGEMENT_REMINDER2))).insertList(session, objectList,fileName);
 		}
 		else if (fileClass.getName().equalsIgnoreCase("com.aia.model.HKEngagementReminder3")) {
-			DataInputProcessor.hker3DAO.insertList(session, objectList,fileName);
+			((Hker3DAO)(DataInputProcessor.getDao(Constants.HK_ENGAGEMENT_REMINDER3))).insertList(session, objectList,fileName);
 		}
 
 	}
@@ -231,7 +240,7 @@ public class FileToObjectList {
 		File[] listOfFiles = folder.listFiles();
 		for (int i = 0; i < listOfFiles.length; i++) {
 			try {
-				if (isFileValid(listOfFiles[i].getName()) && listOfFiles[i].isFile() && (!(DataInputProcessor.fileDAO.isFileProcessed(listOfFiles[i].getName())))) {
+				if (isFileValid(listOfFiles[i].getName()) && listOfFiles[i].isFile() && (!(((DataFileDao)(DataInputProcessor.getDao(Constants.DATAFILE))).isFileProcessed(listOfFiles[i].getName())))) {
 					session = sqlSessionFactory.openSession();
 					tx = session.beginTransaction();
 					int[] records =processFile(
@@ -242,7 +251,7 @@ public class FileToObjectList {
 					dataFile.setProcessDate(new Date());
 					dataFile.setTotalRecords(records[0]);
 					dataFile.setDuplicateRecords(records[1]);
-					DataInputProcessor.fileDAO.insert(dataFile,session);
+					((DataFileDao)(DataInputProcessor.getDao(Constants.DATAFILE))).insert(dataFile,session);
 					tx.commit();
 					FTPConnect.moveToBackUp(localDirectory,
 							listOfFiles[i].getName());

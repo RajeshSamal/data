@@ -18,9 +18,9 @@ public class HKAGProcess {
 	
 	static {
 		importFields = new HashMap<String, String>();
-		CustomObjectDao dao= DataInputProcessor.customDao;
+		CustomObjectDao dao= ((CustomObjectDao)(DataInputProcessor.getDao(Constants.CUSTOM)));
 		String fileType= Constants.HK_GOLD_ARCHIVE;
-		String custObjectId = DataInputProcessor.customDao.getCustomObjectId(fileType);
+		String custObjectId = dao.getCustomObjectId(fileType);
 		String languagePrefernceID = dao.getCustomFieldId(fileType, "LANGUAGE_PREFERENCE1");
 		String clientID = dao.getCustomFieldId(fileType, "CLIENT_ID1");
 		String genderId = dao.getCustomFieldId(fileType, "GENDER1");

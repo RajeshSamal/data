@@ -196,6 +196,31 @@ public class HKAchievePlatinum implements CommonModel,CommonDBColumn {
 	public void setFileName(String fileName) {
 		this.fileName = fileName;
 	}
+	
+	public String getExpiryDate() {
+		return "";
+	}
+
+	public void setExpiryDate(String expiryDate) {
+		
+	}
+
+
+	public String getSmokerInd() {
+		return "";
+	}
+
+	public void setSmokerInd(String smokerIndicator) {
+		
+	}
+
+	public String getPointsToMantainStatus() {
+		return "";
+	}
+
+	public void setPointsToMantainStatus(String pointsToManatinStatus) {
+		
+	}
 
 	@Override
 	public boolean equals(Object other) {
@@ -214,4 +239,5 @@ public class HKAchievePlatinum implements CommonModel,CommonDBColumn {
 	 public int hashCode(){
 		    return emailAddress.toLowerCase().hashCode();
 		  }
-}
+
+	}

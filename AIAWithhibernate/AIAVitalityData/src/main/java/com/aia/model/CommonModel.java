@@ -27,19 +27,7 @@ public interface CommonModel {
 	public String getLanguagePreference();
 
 	public void setLanguagePreference(String languagePreference);
-
-	public String getRecordStatus();
-
-	public void setRecordStatus(String recordStatus);
-
-	public Date getProcessDate();
-
-	public void setProcessDate(Date processDate);
-
-	public String getRecordId();
-
-	public void setRecordId(String recordId);
-
+	
 	public String getVitalityStatus();
 
 	public void setVitalityStatus(String vitalityStatus);
@@ -55,16 +43,19 @@ public interface CommonModel {
 	public String getClientId();
 
 	public void setClientId(String clientId);
+	
+	public String getExpiryDate();
+	
+	public void setExpiryDate(String expiryDate) ;
+	
+	public String getSmokerInd();
+	
+	public void setSmokerInd(String smokerInd);
+	
+	public String getPointsToMantainStatus();
+	
+	public void setPointsToMantainStatus(String pointsToManatinStatus) ;
+	
+	
 
-	public String getFileType();
-
-	public void setFileType(String fileType);
-
-	public Date getLastModifiedDate();
-
-	public void setLastModifiedDate(Date lastModifiedDate);
-
-	public String getFileName();
-
-	public void setFileName(String fileName);
 }

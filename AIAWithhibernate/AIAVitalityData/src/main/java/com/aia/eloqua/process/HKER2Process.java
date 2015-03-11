@@ -18,9 +18,9 @@ public class HKER2Process {
 	
 	static {
 		importFields = new HashMap<String, String>();
-		CustomObjectDao dao= DataInputProcessor.customDao;
+		CustomObjectDao dao= ((CustomObjectDao)(DataInputProcessor.getDao(Constants.CUSTOM)));
 		String fileType= Constants.HK_ENGAGEMENT_REMINDER2;
-		String custObjectId = DataInputProcessor.customDao.getCustomObjectId(fileType);
+		String custObjectId = dao.getCustomObjectId(fileType);
 		String languagePrefernceID = dao.getCustomFieldId(fileType, "LANGUAGE_PREFERENCE1");
 		String clientID = dao.getCustomFieldId(fileType, "CLIENT_ID1");
 		String EntityReferenceID = dao.getCustomFieldId(fileType, "ENTITY_REFERENCE_NUMBER1");

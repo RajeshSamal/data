@@ -10,7 +10,9 @@ import org.hibernate.SessionFactory;
 import org.hibernate.Transaction;
 
 import com.aia.common.utils.Constants;
+import com.aia.dao.DataFileDao;
 import com.aia.dao.DbConnectionFactory;
+import com.aia.dao.HkasDAO;
 import com.aia.data.DataInputProcessor;
 import com.aia.eloqua.process.HKASProcess;
 import com.aia.model.CDODetails;
@@ -36,7 +38,7 @@ public class HKASSend {
 			session = sqlSessionFactory.openSession();
 			tx = session.beginTransaction();
 			fileType = Constants.HK_SILVER_ARCHIVE;
-			List<HKAchieveSilver> objectList = DataInputProcessor.hkasDAO
+			List<HKAchieveSilver> objectList = ((HkasDAO)(DataInputProcessor.getDao(Constants.HK_SILVER_ARCHIVE)))
 					.getDistnctDuplicates();
 			Set<HKAchieveSilver> duplicateSet = new HashSet<HKAchieveSilver>(
 					objectList);
@@ -55,17 +57,17 @@ public class HKASSend {
 				for (int i = 0; i < list.size(); i++) {
 					HKAS = (HKAchieveSilver) list.get(i);
 					HKAS.setRecordStatus(Constants.RECORD_PROCESSED);
-					List<DataFile> fileList = DataInputProcessor.fileDAO
+					List<DataFile> fileList = ((DataFileDao)(DataInputProcessor.getDao(Constants.DATAFILE)))
 							.get(HKAS.getFileName());
 					if (fileList.size() > 0) {
 						DataFile file = fileList.get(0);
 						file.setDuplicateRecords(file.getDuplicateRecords() - 1);
-						DataInputProcessor.fileDAO.update(file);
+						((DataFileDao)(DataInputProcessor.getDao(Constants.DATAFILE))).update(file);
 					}
 				}
 			}
 
-			DataInputProcessor.hkasDAO.updateList(list, session);
+			((HkasDAO)(DataInputProcessor.getDao(Constants.HK_SILVER_ARCHIVE))).updateList(list, session);
 
 			tx.commit();
 		} catch (Exception e) {
@@ -92,7 +94,7 @@ public class HKASSend {
 			session = sqlSessionFactory.openSession();
 			tx = session.beginTransaction();
 			fileType = Constants.HK_SILVER_ARCHIVE;
-			List<HKAchieveSilver> objectList = DataInputProcessor.hkasDAO
+			List<HKAchieveSilver> objectList = ((HkasDAO)(DataInputProcessor.getDao(Constants.HK_SILVER_ARCHIVE)))
 					.getListAsStatus(Constants.RECORD_SAVED);
 
 			for (int i = 0; i < objectList.size(); i++) {
@@ -110,7 +112,7 @@ public class HKASSend {
 					HKAS.setRecordStatus(Constants.RECORD_PROCESSED);
 				}
 			}
-			DataInputProcessor.hkasDAO.updateList(objectList, session);
+			((HkasDAO)(DataInputProcessor.getDao(Constants.HK_SILVER_ARCHIVE))).updateList(objectList, session);
 
 			tx.commit();
 		} catch (Exception e) {

@@ -10,7 +10,9 @@ import org.hibernate.SessionFactory;
 import org.hibernate.Transaction;
 
 import com.aia.common.utils.Constants;
+import com.aia.dao.DataFileDao;
 import com.aia.dao.DbConnectionFactory;
+import com.aia.dao.Hker1DAO;
 import com.aia.data.DataInputProcessor;
 import com.aia.eloqua.process.HKER1Process;
 import com.aia.model.CDODetails;
@@ -35,7 +37,7 @@ public class HKER1Send {
 			session = sqlSessionFactory.openSession();
 			tx = session.beginTransaction();
 			fileType = Constants.HK_ENGAGEMENT_REMINDER1;
-			List<HKEngagementReminder1> objectList = DataInputProcessor.hker1DAO
+			List<HKEngagementReminder1> objectList = ((Hker1DAO)(DataInputProcessor.getDao(Constants.HK_ENGAGEMENT_REMINDER1)))
 					.getDistnctDuplicates();
 			Set<HKEngagementReminder1> duplicateSet = new HashSet<HKEngagementReminder1>(
 					objectList);
@@ -52,16 +54,16 @@ public class HKER1Send {
 				for (int i = 0; i < list.size(); i++) {
 					HKER1 = (HKEngagementReminder1) list.get(i);
 					HKER1.setRecordStatus(Constants.RECORD_PROCESSED);
-					List<DataFile> fileList = DataInputProcessor.fileDAO.get(HKER1.getFileName());
+					List<DataFile> fileList = ((DataFileDao)(DataInputProcessor.getDao(Constants.DATAFILE))).get(HKER1.getFileName());
 					if(fileList.size()>0){
 						DataFile file = fileList.get(0);
 						file.setDuplicateRecords(file.getDuplicateRecords()-1);
-						DataInputProcessor.fileDAO.update(file);
+						((DataFileDao)(DataInputProcessor.getDao(Constants.DATAFILE))).update(file);
 					}
 				}
 			}
 			
-			DataInputProcessor.hker1DAO.updateList(list, session);
+			((Hker1DAO)(DataInputProcessor.getDao(Constants.HK_ENGAGEMENT_REMINDER1))).updateList(list, session);
 
 			tx.commit();
 		} catch (Exception e) {
@@ -88,7 +90,7 @@ public class HKER1Send {
 			session = sqlSessionFactory.openSession();
 			tx = session.beginTransaction();
 			fileType = Constants.HK_ENGAGEMENT_REMINDER1;
-			List<HKEngagementReminder1> objectList = DataInputProcessor.hker1DAO
+			List<HKEngagementReminder1> objectList = ((Hker1DAO)(DataInputProcessor.getDao(Constants.HK_ENGAGEMENT_REMINDER1)))
 					.getListAsStatus(Constants.RECORD_SAVED);
 
 			for (int i = 0; i < objectList.size(); i++) {
@@ -105,7 +107,7 @@ public class HKER1Send {
 					HKER1.setRecordStatus(Constants.RECORD_PROCESSED);
 				}
 			}
-			DataInputProcessor.hker1DAO.updateList(objectList, session);
+			((Hker1DAO)(DataInputProcessor.getDao(Constants.HK_ENGAGEMENT_REMINDER1))).updateList(objectList, session);
 
 			tx.commit();
 		} catch (Exception e) {

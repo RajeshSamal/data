@@ -20,6 +20,7 @@ import org.apache.commons.net.ftp.FTPFile;
 import org.apache.log4j.Logger;
 
 import com.aia.dao.EloquaDao;
+import com.aia.dao.FTPDao;
 import com.aia.data.DataInputProcessor;
 import com.aia.data.DataOutputProcessor;
 import com.aia.model.FTP;
@@ -32,7 +33,7 @@ public class FTPConnect {
 	  {
 		  // get an ftpClient object  
 		  FTPClient ftpClient = new FTPClient();
-		  FTP ftp = DataInputProcessor.ftpDao.getFTPDetails();
+		  FTP ftp = ((FTPDao)(DataInputProcessor.getDao(Constants.FTP))).getFTPDetails();
 		  
 		  try {  
 		   // pass directory path on server to connect  

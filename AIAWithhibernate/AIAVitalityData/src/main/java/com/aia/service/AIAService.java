@@ -18,6 +18,7 @@ import com.eloqua.api.models.Sync;
 import com.eloqua.api.models.SyncResult;
 import com.aia.common.utils.Constants;
 import com.aia.dao.CustomObjectDao;
+import com.aia.dao.EloquaDao;
 import com.aia.data.DataInputProcessor;
 import com.aia.eloqua.process.HKAGProcess;
 import com.aia.eloqua.process.HKAPProcess;
@@ -46,8 +47,8 @@ public class AIAService {
 	 */
 	public static int syncDataToEloqua(List<CDODetails> cdoDetailsList, String fileType) {
 		int status= -1;
-		Eloqua eloqua = DataInputProcessor.eloquaDao.getEloquaDetails();
-		custObjectId = DataInputProcessor.customDao.getCustomObjectId(fileType);
+		Eloqua eloqua = ((EloquaDao)(DataInputProcessor.getDao(Constants.ELOQUA))).getEloquaDetails();
+		custObjectId = ((CustomObjectDao)(DataInputProcessor.getDao(Constants.CUSTOM))).getCustomObjectId(fileType);
 
 		ImportCustomDataObjectHelper cdoHelper = new ImportCustomDataObjectHelper(
 				eloqua.getSite(), eloqua.getUser(), eloqua.getPassword(), eloqua.getBaseUrl());

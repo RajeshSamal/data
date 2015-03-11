@@ -10,7 +10,9 @@ import org.hibernate.SessionFactory;
 import org.hibernate.Transaction;
 
 import com.aia.common.utils.Constants;
+import com.aia.dao.DataFileDao;
 import com.aia.dao.DbConnectionFactory;
+import com.aia.dao.HkapDAO;
 import com.aia.data.DataInputProcessor;
 import com.aia.eloqua.process.HKAPProcess;
 import com.aia.model.CDODetails;
@@ -36,7 +38,7 @@ public class HKAPSend {
 			session = sqlSessionFactory.openSession();
 			tx = session.beginTransaction();
 			fileType = Constants.HK_PLATINUM_ARCHIVE;
-			List<HKAchievePlatinum> objectList = DataInputProcessor.hkapDAO
+			List<HKAchievePlatinum> objectList = ((HkapDAO)(DataInputProcessor.getDao(Constants.HK_PLATINUM_ARCHIVE)))
 					.getDistnctDuplicates();
 			Set<HKAchievePlatinum> duplicateSet = new HashSet<HKAchievePlatinum>(
 					objectList);
@@ -54,17 +56,17 @@ public class HKAPSend {
 				for (int i = 0; i < list.size(); i++) {
 					HKAP = (HKAchievePlatinum) list.get(i);
 					HKAP.setRecordStatus(Constants.RECORD_PROCESSED);
-					List<DataFile> fileList = DataInputProcessor.fileDAO.get(HKAP.getFileName());
+					List<DataFile> fileList = ((DataFileDao)(DataInputProcessor.getDao(Constants.DATAFILE))).get(HKAP.getFileName());
 					if (fileList.size() > 0) {
 						DataFile file = fileList.get(0);
 						file.setDuplicateRecords(file.getDuplicateRecords() - 1);
-						DataInputProcessor.fileDAO.update(file);
+						((DataFileDao)(DataInputProcessor.getDao(Constants.DATAFILE))).update(file);
 					}
 
 				}
 			}
 			
-			DataInputProcessor.hkapDAO.updateList(list, session);
+			((HkapDAO)(DataInputProcessor.getDao(Constants.HK_PLATINUM_ARCHIVE))).updateList(list, session);
 
 			tx.commit();
 		} catch (Exception e) {
@@ -91,7 +93,7 @@ public class HKAPSend {
 			session = sqlSessionFactory.openSession();
 			tx = session.beginTransaction();
 			fileType = Constants.HK_PLATINUM_ARCHIVE;
-			List<HKAchievePlatinum> objectList = DataInputProcessor.hkapDAO
+			List<HKAchievePlatinum> objectList = ((HkapDAO)(DataInputProcessor.getDao(Constants.HK_PLATINUM_ARCHIVE)))
 					.getListAsStatus(Constants.RECORD_SAVED);
 
 			for (int i = 0; i < objectList.size(); i++) {
@@ -109,7 +111,7 @@ public class HKAPSend {
 					HKAP.setRecordStatus(Constants.RECORD_PROCESSED);
 				}
 			}
-			DataInputProcessor.hkapDAO.updateList(objectList, session);
+			((HkapDAO)(DataInputProcessor.getDao(Constants.HK_PLATINUM_ARCHIVE))).updateList(objectList, session);
 
 			tx.commit();
 		} catch (Exception e) {

@@ -4,6 +4,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 import com.aia.common.utils.Constants;
+import com.aia.dao.HkapDAO;
 import com.aia.data.DataInputProcessor;
 import com.aia.data.HandleDuplicates;
 import com.aia.model.HKAchievePlatinum;
@@ -14,8 +15,8 @@ public class HKAPDupHandler {
 	
 	public static List<HKAchievePlatinum> handleDuplicateHKAP(List<HKAchievePlatinum> objectList){
 		
-		List<HKAchievePlatinum> existingDuplicates = DataInputProcessor.hkapDAO.getListAsStatus(Constants.RECORD_DUPLICATE);
-		List<HKAchievePlatinum> existingToBeSave = DataInputProcessor.hkapDAO.getListAsStatus(Constants.RECORD_SAVED);
+		List<HKAchievePlatinum> existingDuplicates = ((HkapDAO)(DataInputProcessor.getDao(Constants.HK_PLATINUM_ARCHIVE))).getListAsStatus(Constants.RECORD_DUPLICATE);
+		List<HKAchievePlatinum> existingToBeSave = ((HkapDAO)(DataInputProcessor.getDao(Constants.HK_PLATINUM_ARCHIVE))).getListAsStatus(Constants.RECORD_SAVED);
 		List<HKAchievePlatinum> statusWithSave = new ArrayList<HKAchievePlatinum>();
 		List<HKAchievePlatinum> safeToSave = new ArrayList<HKAchievePlatinum>();
 		

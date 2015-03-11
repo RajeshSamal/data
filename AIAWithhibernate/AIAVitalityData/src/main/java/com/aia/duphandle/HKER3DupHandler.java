@@ -4,6 +4,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 import com.aia.common.utils.Constants;
+import com.aia.dao.Hker3DAO;
 import com.aia.data.DataInputProcessor;
 import com.aia.data.HandleDuplicates;
 import com.aia.model.HKEngagementReminder3;
@@ -14,8 +15,8 @@ public class HKER3DupHandler {
 	
 	public static List<HKEngagementReminder3> handleDuplicateHKER3(List<HKEngagementReminder3> objectList){
 		
-		List<HKEngagementReminder3> existingDuplicates = DataInputProcessor.hker3DAO.getListAsStatus(Constants.RECORD_DUPLICATE);
-		List<HKEngagementReminder3> existingToBeSave = DataInputProcessor.hker3DAO.getListAsStatus(Constants.RECORD_SAVED);
+		List<HKEngagementReminder3> existingDuplicates = ((Hker3DAO)(DataInputProcessor.getDao(Constants.HK_ENGAGEMENT_REMINDER3))).getListAsStatus(Constants.RECORD_DUPLICATE);
+		List<HKEngagementReminder3> existingToBeSave = ((Hker3DAO)(DataInputProcessor.getDao(Constants.HK_ENGAGEMENT_REMINDER3))).getListAsStatus(Constants.RECORD_SAVED);
 		List<HKEngagementReminder3> statusWithSave = new ArrayList<HKEngagementReminder3>();
 		List<HKEngagementReminder3> safeToSave = new ArrayList<HKEngagementReminder3>();
 		
