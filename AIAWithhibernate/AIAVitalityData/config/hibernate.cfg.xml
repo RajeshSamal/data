@@ -34,6 +34,9 @@
 <mapping class="com.aia.model.HKAchieveGold" />
 <mapping class="com.aia.model.HKAchieveSilver" />
 <mapping class="com.aia.model.HKAchievePlatinum" />
+<mapping class="com.aia.model.HKEngagementReminder1" />
+<mapping class="com.aia.model.HKEngagementReminder2" />
+<mapping class="com.aia.model.HKEngagementReminder3" />
 <mapping class="com.aia.model.DataFile" />
 <mapping class="com.aia.model.FTP" />
 <mapping class="com.aia.model.Eloqua" />

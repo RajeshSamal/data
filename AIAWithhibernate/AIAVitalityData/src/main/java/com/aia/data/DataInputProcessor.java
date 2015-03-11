@@ -150,13 +150,13 @@ public class DataInputProcessor {
 		fileMap.put("HK-ACHIEVE_SILVER", HKAchieveSilverColumnMap);
 		fileMap.put("HK-ACHIEVE_PLATINUM", HKAchievePlatinumColumnMap);
 		fileMap.put("HK-ENGAGEMENT_REMINDER1", HKEngagementReminder1);
-		fileMap.put("HK-ENGAGEMENT_REMINDER1", HKEngagementReminder2);
-		fileMap.put("HK-ENGAGEMENT_REMINDER1", HKEngagementReminder3);
+		fileMap.put("HK-ENGAGEMENT_REMINDER2", HKEngagementReminder2);
+		fileMap.put("HK-ENGAGEMENT_REMINDER3", HKEngagementReminder3);
 	}
 	
 
 	public static void startProcessing() {
-		FTPConnect.processFTP(localDirectory);
+		//FTPConnect.processFTP(localDirectory);
 		FileToObjectList.processAllFilesToDB(localDirectory);
 		for (String key:fileTypeList){
 			DataOutputProcessor.sendToElqua(key);

@@ -22,6 +22,9 @@ import com.aia.data.DataInputProcessor;
 import com.aia.eloqua.process.HKAGProcess;
 import com.aia.eloqua.process.HKAPProcess;
 import com.aia.eloqua.process.HKASProcess;
+import com.aia.eloqua.process.HKER1Process;
+import com.aia.eloqua.process.HKER2Process;
+import com.aia.eloqua.process.HKER3Process;
 import com.aia.model.CDODetails;
 import com.aia.model.Eloqua;
 
@@ -63,6 +66,18 @@ public class AIAService {
 					importFields = HKASProcess.importFields;
 					
 				}
+				else if(fileType.equals(Constants.HK_ENGAGEMENT_REMINDER1)){
+					importFields = HKER1Process.importFields;
+					
+				}
+				else if(fileType.equals(Constants.HK_ENGAGEMENT_REMINDER2)){
+					importFields = HKER2Process.importFields;
+					
+				}
+				else if(fileType.equals(Constants.HK_ENGAGEMENT_REMINDER3)){
+					importFields = HKER3Process.importFields;
+					
+				}
 				
 				Import importStruc = cdoHelper.createImportStructure(
 						custObjectId, importFields);
@@ -79,6 +94,18 @@ public class AIAService {
 					}
 					else if(fileType.equals(Constants.HK_SILVER_ARCHIVE)){
 						cdoDataList = HKASProcess.getCDOListForHKAS(cdoDetailsList);
+						
+					}
+					else if(fileType.equals(Constants.HK_ENGAGEMENT_REMINDER1)){
+						cdoDataList = HKER1Process.getCDOListForHKER1(cdoDetailsList);
+						
+					}
+					else if(fileType.equals(Constants.HK_ENGAGEMENT_REMINDER2)){
+						cdoDataList = HKER2Process.getCDOListForHKER2(cdoDetailsList);
+						
+					}
+					else if(fileType.equals(Constants.HK_ENGAGEMENT_REMINDER3)){
+						cdoDataList = HKER3Process.getCDOListForHKER3(cdoDetailsList);
 						
 					}
 

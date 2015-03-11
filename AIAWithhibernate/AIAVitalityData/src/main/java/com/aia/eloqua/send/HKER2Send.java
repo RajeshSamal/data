@@ -87,8 +87,8 @@ public class HKER2Send {
 			String fileType = null;
 			session = sqlSessionFactory.openSession();
 			tx = session.beginTransaction();
-			fileType = Constants.HK_ENGAGEMENT_REMINDER1;
-			List<HKEngagementReminder2> objectList = DataInputProcessor.hker1DAO
+			fileType = Constants.HK_ENGAGEMENT_REMINDER2;
+			List<HKEngagementReminder2> objectList = DataInputProcessor.hker2DAO
 					.getListAsStatus(Constants.RECORD_SAVED);
 
 			for (int i = 0; i < objectList.size(); i++) {
