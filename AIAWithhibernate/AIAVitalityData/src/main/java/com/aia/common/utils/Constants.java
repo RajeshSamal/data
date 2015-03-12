@@ -1,14 +1,5 @@
 package com.aia.common.utils;
 
-import com.aia.dao.DataFileDao;
-import com.aia.dao.EloquaDao;
-import com.aia.dao.FTPDao;
-import com.aia.dao.HkagDAO;
-import com.aia.dao.HkapDAO;
-import com.aia.dao.HkasDAO;
-import com.aia.dao.Hker1DAO;
-import com.aia.dao.Hker2DAO;
-import com.aia.dao.Hker3DAO;
 
 public interface Constants {
 	String ROLE_ADMIN = "ROLE_ADMIN";
@@ -26,6 +17,13 @@ public interface Constants {
 	String HK_ENGAGEMENT_REMINDER1 = "HKER1";
 	String HK_ENGAGEMENT_REMINDER2 = "HKER2";
 	String HK_ENGAGEMENT_REMINDER3 = "HKER3";
+	String HK_APPROACH_GOLD = "HKAPG";
+	String HK_APPROACH_SILVER = "HKAPS";
+	String HK_APPROACH_PLATINUM = "HKAPP";
+	String HK_ADIDAS_MICOACH_CONCENT_REMINDER = "HKAMCR";
+	String HK_DOWNGRADE_WARNING ="HKDW";
+	String HK_MID_YEAR_ASSESSMENT ="HKMYA";
+	
 	
 	String ELOQUA = "ELOQUA";
 	String FTP="FTP";

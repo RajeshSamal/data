@@ -16,11 +16,17 @@ import com.aia.dao.DataFileDao;
 import com.aia.dao.EloquaDao;
 import com.aia.dao.FTPDao;
 import com.aia.dao.HkagDAO;
+import com.aia.dao.HkamcrDAO;
 import com.aia.dao.HkapDAO;
+import com.aia.dao.HkapgDAO;
+import com.aia.dao.HkappDAO;
+import com.aia.dao.HkapsDAO;
 import com.aia.dao.HkasDAO;
+import com.aia.dao.HkdwDAO;
 import com.aia.dao.Hker1DAO;
 import com.aia.dao.Hker2DAO;
 import com.aia.dao.Hker3DAO;
+import com.aia.dao.HkmyaDAO;
 
 public class DataInputProcessor {
 
@@ -38,7 +44,10 @@ public class DataInputProcessor {
 											"HK-ENGAGEMENT_REMINDER3",
 											"HK-ADIDAS_MICOACH_CONCENT_REMINDER",
 											"HK-MID_YEAR_ASSESSMENT",
-											"HK-DOWNGRADE_WARNING"};
+											"HK-DOWNGRADE_WARNING",
+											"HK-APPROACH_GOLD",
+											"HK-APPROACH_SILVER",
+											"HK-APPROACH_PLATINUM"};
 	
 	public static String[] properieslist= {"HKAchieveGold.properties",
 											"HKAchieveSilver.properties",
@@ -48,7 +57,10 @@ public class DataInputProcessor {
 											"HKEngagementReminder3.properties",
 											"HKAdidasMicoachContentReminder.properties",
 											"HKMidYearAssessment.properties",
-											"HKDowngradeWarning.properties"};
+											"HKDowngradeWarning.properties",
+											"HKApprochGold.properties",
+											"HKApprochSilver.properties",
+											"HKApprochPlatinum.properties"};
 
 
 	static {
@@ -117,6 +129,24 @@ public class DataInputProcessor {
 		}
 		else if(daoName != null && daoName.equals(Constants.HK_ENGAGEMENT_REMINDER3)){
 			return new Hker3DAO();
+		}
+		else if(daoName != null && daoName.equals(Constants.HK_ADIDAS_MICOACH_CONCENT_REMINDER)){
+			return new HkamcrDAO();
+		}
+		else if(daoName != null && daoName.equals(Constants.HK_DOWNGRADE_WARNING)){
+			return new HkdwDAO();
+		}
+		else if(daoName != null && daoName.equals(Constants.HK_MID_YEAR_ASSESSMENT)){
+			return new HkmyaDAO();
+		}
+		else if(daoName != null && daoName.equals(Constants.HK_APPROACH_GOLD)){
+			return new HkapgDAO();
+		}
+		else if(daoName != null && daoName.equals(Constants.HK_APPROACH_SILVER)){
+			return new HkapsDAO();
+		}
+		else if(daoName != null && daoName.equals(Constants.HK_APPROACH_PLATINUM)){
+			return new HkappDAO();
 		}
 		else if(daoName != null && daoName.equals(Constants.DATAFILE)){
 			return new DataFileDao();
