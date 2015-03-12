@@ -50,7 +50,7 @@ public class HKER2Process {
 				+ custObjectId + "].Field["+memberFirstNameID+"]}}");
 	}
 	
-	public static CDODetails processHKER2(CommonModel model) {
+	public static CDODetails process(CommonModel model) {
 
 		CDODetails cdoData = new CDODetails();
 
@@ -66,17 +66,17 @@ public class HKER2Process {
 	}
 	
 	
-	public static List<Map<String, Object>> getCDOListForHKER2(
+	public static List<Map<String, Object>> getCDOList(
 			List<CDODetails> cdoDetailsList) {
 
 		List<Map<String, Object>> cdoDataList = new ArrayList<Map<String, Object>>();
 		for (CDODetails cdoDetail : cdoDetailsList) {
-			cdoDataList.add(prepareHKER2LeadData(cdoDetail));
+			cdoDataList.add(prepareLeadData(cdoDetail));
 		}
 		return cdoDataList;
 	}
 
-	private static Map<String, Object> prepareHKER2LeadData(CDODetails cdoDetail) {
+	private static Map<String, Object> prepareLeadData(CDODetails cdoDetail) {
 		Map<String, Object> cdoData = new HashMap<String, Object>();
 
 		if (cdoDetail != null) {

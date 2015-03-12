@@ -67,7 +67,7 @@ public class HKAPProcess {
 		
 	}
 	
-	public static CDODetails processHKAP(CommonModel model) {
+	public static CDODetails process(CommonModel model) {
 
 		CDODetails cdoData = new CDODetails();
 
@@ -86,17 +86,17 @@ public class HKAPProcess {
 	}
 	
 	
-	public static List<Map<String, Object>> getCDOListForHKAP(
+	public static List<Map<String, Object>> getCDOList(
 			List<CDODetails> cdoDetailsList) {
 
 		List<Map<String, Object>> cdoDataList = new ArrayList<Map<String, Object>>();
 		for (CDODetails cdoDetail : cdoDetailsList) {
-			cdoDataList.add(prepareHKAPLeadData(cdoDetail));
+			cdoDataList.add(prepareLeadData(cdoDetail));
 		}
 		return cdoDataList;
 	}
 
-	private static Map<String, Object> prepareHKAPLeadData(CDODetails cdoDetail) {
+	private static Map<String, Object> prepareLeadData(CDODetails cdoDetail) {
 		Map<String, Object> cdoData = new HashMap<String, Object>();
 
 		if (cdoDetail != null) {

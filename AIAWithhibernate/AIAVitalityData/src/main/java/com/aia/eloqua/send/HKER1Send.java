@@ -46,7 +46,7 @@ public class HKER1Send {
 			for (int i = 0; i < list.size(); i++) {
 			
 				HKER1 = list.get(i);
-				CDODetails cdoData = HKER1Process.processHKER1(HKER1);
+				CDODetails cdoData = HKER1Process.process(HKER1);
 				cdoDetailsList.add(cdoData);
 			}
 			int status = AIAService.syncDataToEloqua(cdoDetailsList, fileType);
@@ -96,7 +96,7 @@ public class HKER1Send {
 			for (int i = 0; i < objectList.size(); i++) {
 
 				HKER1 = (HKEngagementReminder1) objectList.get(i);
-				CDODetails cdoData =  HKER1Process.processHKER1(HKER1);
+				CDODetails cdoData =  HKER1Process.process(HKER1);
 				cdoDetailsList.add(cdoData);
 			}
 

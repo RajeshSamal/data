@@ -49,7 +49,7 @@ public class HKAPSSend {
 				HKAPS = list.get(i);
 				//comment: below status change may not require.
 				//HKAG.setRecordStatus(Constants.RECORD_SENT);
-				CDODetails cdoData = HKAPSProcess.processHKAG(HKAPS);
+				CDODetails cdoData = HKAPSProcess.process(HKAPS);
 				cdoDetailsList.add(cdoData);
 			}
 			int status = AIAService.syncDataToEloqua(cdoDetailsList, fileType);
@@ -101,7 +101,7 @@ public class HKAPSSend {
 				HKAPS = (HKApproachSilver) objectList.get(i);
 				//comment: below status change may not require.
 				//HKAG.setRecordStatus(Constants.RECORD_SENT);
-				CDODetails cdoData = HKAPSProcess.processHKAG(HKAPS);
+				CDODetails cdoData = HKAPSProcess.process(HKAPS);
 				cdoDetailsList.add(cdoData);
 			}
 			int status = AIAService.syncDataToEloqua(cdoDetailsList, fileType);

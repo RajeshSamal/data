@@ -48,7 +48,7 @@ public class HKAGSend {
 				HKAG = list.get(i);
 				//comment: below status change may not require.
 				//HKAG.setRecordStatus(Constants.RECORD_SENT);
-				CDODetails cdoData = HKAGProcess.processHKAG(HKAG);
+				CDODetails cdoData = HKAGProcess.process(HKAG);
 				cdoDetailsList.add(cdoData);
 			}
 			int status = AIAService.syncDataToEloqua(cdoDetailsList, fileType);
@@ -100,7 +100,7 @@ public class HKAGSend {
 				HKAG = (HKAchieveGold) objectList.get(i);
 				//comment: below status change may not require.
 				//HKAG.setRecordStatus(Constants.RECORD_SENT);
-				CDODetails cdoData = HKAGProcess.processHKAG(HKAG);
+				CDODetails cdoData = HKAGProcess.process(HKAG);
 				cdoDetailsList.add(cdoData);
 			}
 

@@ -32,7 +32,7 @@ public class HKAMCRSend {
 		try {
 
 			List<CDODetails> cdoDetailsList = new ArrayList<CDODetails>();
-			HKAdidasMicConRem HKDW = null;
+			HKAdidasMicConRem HKAMCR = null;
 			String fileType = null;
 			session = sqlSessionFactory.openSession();
 			tx = session.beginTransaction();
@@ -45,18 +45,18 @@ public class HKAMCRSend {
 
 			for (int i = 0; i < list.size(); i++) {
 			
-				HKDW = list.get(i);
+				HKAMCR = list.get(i);
 				//comment: below status change may not require.
 				//HKAG.setRecordStatus(Constants.RECORD_SENT);
-				CDODetails cdoData = HKAMCRProcess.processHKAG(HKDW);
+				CDODetails cdoData = HKAMCRProcess.process(HKAMCR);
 				cdoDetailsList.add(cdoData);
 			}
 			int status = AIAService.syncDataToEloqua(cdoDetailsList, fileType);
 			if (status == 0) {
 				for (int i = 0; i < list.size(); i++) {
-					HKDW = (HKAdidasMicConRem) list.get(i);
-					HKDW.setRecordStatus(Constants.RECORD_PROCESSED);
-					List<DataFile> fileList = ((DataFileDao)(DataInputProcessor.getDao(Constants.DATAFILE))).get(HKDW.getFileName());
+					HKAMCR = (HKAdidasMicConRem) list.get(i);
+					HKAMCR.setRecordStatus(Constants.RECORD_PROCESSED);
+					List<DataFile> fileList = ((DataFileDao)(DataInputProcessor.getDao(Constants.DATAFILE))).get(HKAMCR.getFileName());
 					if(fileList.size()>0){
 						DataFile file = fileList.get(0);
 						file.setDuplicateRecords(file.getDuplicateRecords()-1);
@@ -87,7 +87,7 @@ public class HKAMCRSend {
 		try {
 
 			List<CDODetails> cdoDetailsList = new ArrayList<CDODetails>();
-			HKAdidasMicConRem HKDW = null;
+			HKAdidasMicConRem HKAMCR = null;
 			String fileType = null;
 			session = sqlSessionFactory.openSession();
 			tx = session.beginTransaction();
@@ -97,17 +97,17 @@ public class HKAMCRSend {
 
 			for (int i = 0; i < objectList.size(); i++) {
 
-				HKDW = (HKAdidasMicConRem) objectList.get(i);
+				HKAMCR = (HKAdidasMicConRem) objectList.get(i);
 				//comment: below status change may not require.
 				//HKAG.setRecordStatus(Constants.RECORD_SENT);
-				CDODetails cdoData = HKAMCRProcess.processHKAG(HKDW);
+				CDODetails cdoData = HKAMCRProcess.process(HKAMCR);
 				cdoDetailsList.add(cdoData);
 			}
 			int status = AIAService.syncDataToEloqua(cdoDetailsList, fileType);
 			if (status == 0) {
 				for (int i = 0; i < objectList.size(); i++) {
-					HKDW = (HKAdidasMicConRem) objectList.get(i);
-					HKDW.setRecordStatus(Constants.RECORD_PROCESSED);
+					HKAMCR = (HKAdidasMicConRem) objectList.get(i);
+					HKAMCR.setRecordStatus(Constants.RECORD_PROCESSED);
 				}
 			}
 			((HkamcrDAO)(DataInputProcessor.getDao(Constants.HK_ADIDAS_MICOACH_CONCENT_REMINDER))).updateList(objectList, session);

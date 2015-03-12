@@ -48,7 +48,7 @@ public class HKASSend {
 			for (int i = 0; i < list.size(); i++) {
 				HKAS = list.get(i);
 				// HKAS.setRecordStatus(Constants.RECORD_SENT);
-				CDODetails cdoData = HKASProcess.processHKAS(HKAS);
+				CDODetails cdoData = HKASProcess.process(HKAS);
 				cdoDetailsList.add(cdoData);
 
 			}
@@ -101,7 +101,7 @@ public class HKASSend {
 
 				HKAS = (HKAchieveSilver) objectList.get(i);
 				//HKAS.setRecordStatus(Constants.RECORD_SENT);
-				CDODetails cdoData = HKASProcess.processHKAS(HKAS);
+				CDODetails cdoData = HKASProcess.process(HKAS);
 				cdoDetailsList.add(cdoData);
 			}
 

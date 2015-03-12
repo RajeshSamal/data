@@ -49,7 +49,7 @@ public class HKAPGSend {
 				HKAPG = list.get(i);
 				//comment: below status change may not require.
 				//HKAG.setRecordStatus(Constants.RECORD_SENT);
-				CDODetails cdoData = HKAPGProcess.processHKAG(HKAPG);
+				CDODetails cdoData = HKAPGProcess.process(HKAPG);
 				cdoDetailsList.add(cdoData);
 			}
 			int status = AIAService.syncDataToEloqua(cdoDetailsList, fileType);
@@ -101,7 +101,7 @@ public class HKAPGSend {
 				HKAPG = (HKApproachGold) objectList.get(i);
 				//comment: below status change may not require.
 				//HKAG.setRecordStatus(Constants.RECORD_SENT);
-				CDODetails cdoData = HKAPGProcess.processHKAG(HKAPG);
+				CDODetails cdoData = HKAPGProcess.process(HKAPG);
 				cdoDetailsList.add(cdoData);
 			}
 

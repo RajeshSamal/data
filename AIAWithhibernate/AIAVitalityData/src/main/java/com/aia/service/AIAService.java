@@ -87,26 +87,26 @@ public class AIAService {
 					List<Map<String, Object>> cdoDataList= null;
 					// import the data
 					if(fileType.equals(Constants.HK_GOLD_ARCHIVE)){
-						cdoDataList = HKAGProcess.getCDOListForHKAG(cdoDetailsList);
+						cdoDataList = HKAGProcess.getCDOList(cdoDetailsList);
 					}
 					else if(fileType.equals(Constants.HK_PLATINUM_ARCHIVE)){
-						cdoDataList = HKAPProcess.getCDOListForHKAP(cdoDetailsList);
+						cdoDataList = HKAPProcess.getCDOList(cdoDetailsList);
 						
 					}
 					else if(fileType.equals(Constants.HK_SILVER_ARCHIVE)){
-						cdoDataList = HKASProcess.getCDOListForHKAS(cdoDetailsList);
+						cdoDataList = HKASProcess.getCDOList(cdoDetailsList);
 						
 					}
 					else if(fileType.equals(Constants.HK_ENGAGEMENT_REMINDER1)){
-						cdoDataList = HKER1Process.getCDOListForHKER1(cdoDetailsList);
+						cdoDataList = HKER1Process.getCDOList(cdoDetailsList);
 						
 					}
 					else if(fileType.equals(Constants.HK_ENGAGEMENT_REMINDER2)){
-						cdoDataList = HKER2Process.getCDOListForHKER2(cdoDetailsList);
+						cdoDataList = HKER2Process.getCDOList(cdoDetailsList);
 						
 					}
 					else if(fileType.equals(Constants.HK_ENGAGEMENT_REMINDER3)){
-						cdoDataList = HKER3Process.getCDOListForHKER3(cdoDetailsList);
+						cdoDataList = HKER3Process.getCDOList(cdoDetailsList);
 						
 					}
 

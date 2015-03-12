@@ -48,7 +48,7 @@ public class HKAPSend {
 			for (int i = 0; i < list.size(); i++) {
 				HKAP = list.get(i);
 				//HKAP.setRecordStatus(Constants.RECORD_SENT);
-				CDODetails cdoData = HKAPProcess.processHKAP(HKAP);
+				CDODetails cdoData = HKAPProcess.process(HKAP);
 				cdoDetailsList.add(cdoData);
 			}
 			int status = AIAService.syncDataToEloqua(cdoDetailsList, fileType);
@@ -100,7 +100,7 @@ public class HKAPSend {
 
 				HKAP = (HKAchievePlatinum) objectList.get(i);
 				//HKAP.setRecordStatus(Constants.RECORD_SENT);
-				CDODetails cdoData = HKAPProcess.processHKAP(HKAP);
+				CDODetails cdoData = HKAPProcess.process(HKAP);
 				cdoDetailsList.add(cdoData);
 			}
 

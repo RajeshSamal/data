@@ -48,7 +48,7 @@ public class HKMYASend {
 				HKMYA = list.get(i);
 				//comment: below status change may not require.
 				//HKAG.setRecordStatus(Constants.RECORD_SENT);
-				CDODetails cdoData = HKAMCRProcess.processHKAG(HKMYA);
+				CDODetails cdoData = HKAMCRProcess.process(HKMYA);
 				cdoDetailsList.add(cdoData);
 			}
 			int status = AIAService.syncDataToEloqua(cdoDetailsList, fileType);
@@ -100,7 +100,7 @@ public class HKMYASend {
 				HKMYA = (HKMidYearAssessment) objectList.get(i);
 				//comment: below status change may not require.
 				//HKAG.setRecordStatus(Constants.RECORD_SENT);
-				CDODetails cdoData = HKAMCRProcess.processHKAG(HKMYA);
+				CDODetails cdoData = HKAMCRProcess.process(HKMYA);
 				cdoDetailsList.add(cdoData);
 			}
 			int status = AIAService.syncDataToEloqua(cdoDetailsList, fileType);
