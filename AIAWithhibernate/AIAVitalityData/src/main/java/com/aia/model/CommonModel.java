@@ -56,6 +56,10 @@ public interface CommonModel {
 	
 	public void setPointsToMantainStatus(String pointsToManatinStatus) ;
 	
+	public String getPointsToApproach();
+
+	public void setPointsToApproach(String pointsToApproach);
+	
 	
 
 }

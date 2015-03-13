@@ -11,4 +11,132 @@ import com.aia.data.DataInputProcessor;
 import com.aia.model.CDODetails;
 import com.aia.model.CommonModel;
 
-public class HKAPSProcess {}
+public class HKAPSProcess {
+	public static Map<String, String> importFields;
+	
+	
+	
+	static {
+		importFields = new HashMap<String, String>();
+		CustomObjectDao dao= ((CustomObjectDao)(DataInputProcessor.getDao(Constants.CUSTOM)));
+		String fileType= Constants.HK_APPROACH_SILVER;
+		String custObjectId = dao.getCustomObjectId(fileType);
+		String languagePrefernceID = dao.getCustomFieldId(fileType, "LANGUAGE_PREFERENCE1");
+		String clientID = dao.getCustomFieldId(fileType, "CLIENT_ID1");
+		String memberExpiryDateID = dao.getCustomFieldId(fileType, "MEMBER_EXPIRY_DATE");
+		String smokerIndId = dao.getCustomFieldId(fileType, "SMOKER_IND1");
+		String genderID = dao.getCustomFieldId(fileType, "GENDER1");
+		String pointsToApproachId = dao.getCustomFieldId(fileType, "POINTS_TO_SILVER1");
+		String pointsBalanceID = dao.getCustomFieldId(fileType, "POINTS_BALANCE1");
+		String vitalityStatusID = dao.getCustomFieldId(fileType, "VITALITY_STATUS1");
+		String EntityReferenceID = dao.getCustomFieldId(fileType, "ENTITY_REFERENCE_NUMBER1");
+		String aiaVitalityNumberID = dao.getCustomFieldId(fileType, "AIA_VITALITY_MEMBER_NUMBER1");
+		String emailAddressID = dao.getCustomFieldId(fileType, "EMAIL_ADDRESS1");
+		String memberSurNmaeID = dao.getCustomFieldId(fileType, "MEMBER_SURNAME1");
+		String memberFirstNameID = dao.getCustomFieldId(fileType, "MEMBER_FIRST_NAMES1");
+		
+		importFields.put("LANGUAGE_PREFERENCE1", "{{CustomObject["
+				+ custObjectId + "].Field[" + languagePrefernceID+ "]}}");
+		
+		importFields.put("CLIENT_ID1", "{{CustomObject["
+				+ custObjectId + "].Field[" + clientID+ "]}}");
+		
+		importFields.put("MEMBER_EXPIRY_DATE1", "{{CustomObject["
+				+ custObjectId + "].Field[" + memberExpiryDateID+ "]}}");
+		
+		importFields.put("SMOKER_IND1", "{{CustomObject["
+				+ custObjectId + "].Field[" + smokerIndId+ "]}}");
+		
+		importFields.put("GENDER1", "{{CustomObject["
+				+ custObjectId + "].Field[" + genderID+ "]}}");
+		
+		importFields.put("POINTS_TO_SILVER1", "{{CustomObject["
+				+ custObjectId + "].Field[" + pointsToApproachId+ "]}}");
+		
+		importFields.put("POINTS_BALANCE1", "{{CustomObject["
+				+ custObjectId + "].Field[" + pointsBalanceID+ "]}}");
+		
+		importFields.put("VITALITY_STATUS1", "{{CustomObject["
+				+ custObjectId + "].Field["+vitalityStatusID+"]}}");
+		
+		importFields.put("ENTITY_REFERENCE_NUMBER1", "{{CustomObject["
+				+ custObjectId + "].Field["+EntityReferenceID+"]}}");
+		
+		importFields.put("AIA_VITALITY_MEMBER_NUMBER1",
+				"{{CustomObject[" + custObjectId + "].Field["+aiaVitalityNumberID+"]}}");
+		
+		importFields.put("EMAIL_ADDRESS1", "{{CustomObject["
+				+ custObjectId + "].Field["+emailAddressID+"]}}");
+		
+		importFields.put("MEMBER_SURNAME1", "{{CustomObject["
+				+ custObjectId + "].Field["+memberSurNmaeID+"]}}");
+		
+		importFields.put("MEMBER_FIRST_NAMES1", "{{CustomObject["
+				+ custObjectId + "].Field["+memberFirstNameID+"]}}");
+		
+		
+		
+		
+	}
+	
+	public static CDODetails process(CommonModel model) {
+
+		CDODetails cdoData = new CDODetails();
+		cdoData.setLanguagePreference(model.getLanguagePreference());
+		cdoData.setClientId(model.getClientId());
+		cdoData.setMemeberExpiryDate(model.getExpiryDate());
+		cdoData.setSmokerInd(model.getSmokerInd());
+		cdoData.setGender(model.getGender());
+		cdoData.setPointsToApproach(model.getPointsToApproach());
+		cdoData.setPointBalance(model.getPointsBalance());
+		cdoData.setVitalityStatus(model.getVitalityStatus());
+		cdoData.setEntityReferenceNumber(model.getEntityReferenceNumber());
+		cdoData.setAiaVitalityMemberNumber(model.getAiaVitalityMemberNumber());
+		cdoData.setEmailAddress(model.getEmailAddress());
+		cdoData.setMemberFirstName(model.getMemberFirstNames());
+		cdoData.setMemberSurname(model.getMemberSurname());
+		return cdoData;
+
+	}
+	
+	
+	public static List<Map<String, Object>> getCDOList(
+			List<CDODetails> cdoDetailsList) {
+
+		List<Map<String, Object>> cdoDataList = new ArrayList<Map<String, Object>>();
+		for (CDODetails cdoDetail : cdoDetailsList) {
+			cdoDataList.add(prepareLeadData(cdoDetail));
+		}
+		return cdoDataList;
+	}
+
+	private static Map<String, Object> prepareLeadData(CDODetails cdoDetail) {
+		Map<String, Object> cdoData = new HashMap<String, Object>();
+
+		if (cdoDetail != null) {
+
+			cdoData.put("LANGUAGE_PREFERENCE1",
+					cdoDetail.getLanguagePreference());
+			cdoData.put("CLIENT_ID1", cdoDetail.getClientId());
+			cdoData.put("MEMBER_EXPIRY_DATE1", cdoDetail.getMemeberExpiryDate());		
+			cdoData.put("SMOKER_IND1", cdoDetail.getSmokerInd());
+			cdoData.put("GENDER1", cdoDetail.getGender());
+			cdoData.put("POINTS_TO_SILVER1", cdoDetail.getPointsToApproach());
+			cdoData.put("POINTS_BALANCE1", cdoDetail.getPointBalance());
+			
+			cdoData.put("VITALITY_STATUS1", cdoDetail.getVitalityStatus());
+			cdoData.put("ENTITY_REFERENCE_NUMBER1",
+					cdoDetail.getEntityReferenceNumber());
+			cdoData.put("AIA_VITALITY_MEMBER_NUMBER1",
+					cdoDetail.getAiaVitalityMemberNumber());
+			cdoData.put("EMAIL_ADDRESS1", cdoDetail.getEmailAddress());
+			cdoData.put("MEMBER_SURNAME1", cdoDetail.getMemberSurname());
+			cdoData.put("MEMBER_FIRST_NAMES1", cdoDetail.getMemberFirstName());
+		}
+		return cdoData;
+	}
+	
+	
+
+
+}

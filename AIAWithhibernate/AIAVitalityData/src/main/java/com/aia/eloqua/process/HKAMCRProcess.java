@@ -22,9 +22,6 @@ public class HKAMCRProcess {
 		String fileType= Constants.HK_ADIDAS_MICOACH_CONCENT_REMINDER;
 		String custObjectId = dao.getCustomObjectId(fileType);
 		String languagePrefernceID = dao.getCustomFieldId(fileType, "LANGUAGE_PREFERENCE1");
-		String clientID = dao.getCustomFieldId(fileType, "CLIENT_ID1");
-		String genderId = dao.getCustomFieldId(fileType, "GENDER1");
-		String pointBalanceID = dao.getCustomFieldId(fileType, "POINTS_BALANCE1");
 		String vitalityStatusID = dao.getCustomFieldId(fileType, "VITALITY_STATUS1");
 		String EntityReferenceID = dao.getCustomFieldId(fileType, "ENTITY_REFERENCE_NUMBER1");
 		String aiaVitalityNumberID = dao.getCustomFieldId(fileType, "AIA_VITALITY_MEMBER_NUMBER1");
@@ -34,15 +31,6 @@ public class HKAMCRProcess {
 		
 		importFields.put("LANGUAGE_PREFERENCE1", "{{CustomObject["
 				+ custObjectId + "].Field[" + languagePrefernceID+ "]}}");
-		
-		importFields.put("CLIENT_ID1", "{{CustomObject[" + custObjectId
-				+ "].Field["+clientID+"]}}");
-		
-		importFields.put("GENDER1", "{{CustomObject[" + custObjectId
-				+ "].Field["+genderId+"]}}");
-		
-		importFields.put("POINTS_BALANCE1", "{{CustomObject["
-				+ custObjectId + "].Field["+pointBalanceID+"]}}");
 		
 		importFields.put("VITALITY_STATUS1", "{{CustomObject["
 				+ custObjectId + "].Field["+vitalityStatusID+"]}}");
@@ -74,13 +62,10 @@ public class HKAMCRProcess {
 		cdoData.setAiaVitalityMemberNumber(model.getAiaVitalityMemberNumber());
 		cdoData.setClientId(model.getClientId());
 		cdoData.setEmailAddress(model.getEmailAddress());
-		cdoData.setGender(model.getGender());
 		cdoData.setEntityReferenceNumber(model.getEntityReferenceNumber());
 		cdoData.setLanguagePreference(model.getLanguagePreference());
 		cdoData.setMemberFirstName(model.getMemberFirstNames());
 		cdoData.setMemberSurname(model.getMemberSurname());
-		cdoData.setPointBalance(model.getPointsBalance());
-		cdoData.setVitalityStatus(model.getVitalityStatus());
 		return cdoData;
 
 	}
@@ -104,9 +89,6 @@ public class HKAMCRProcess {
 			cdoData.put("LANGUAGE_PREFERENCE1",
 					cdoDetail.getLanguagePreference());
 			cdoData.put("CLIENT_ID1", cdoDetail.getClientId());
-			cdoData.put("GENDER1", cdoDetail.getGender());
-			cdoData.put("POINTS_BALANCE1", cdoDetail.getPointBalance());
-			cdoData.put("VITALITY_STATUS1", cdoDetail.getVitalityStatus());
 			cdoData.put("ENTITY_REFERENCE_NUMBER1",
 					cdoDetail.getEntityReferenceNumber());
 			cdoData.put("AIA_VITALITY_MEMBER_NUMBER1",

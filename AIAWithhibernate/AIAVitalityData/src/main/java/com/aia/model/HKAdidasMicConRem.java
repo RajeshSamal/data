@@ -209,6 +209,14 @@ public class HKAdidasMicConRem implements CommonModel,CommonDBColumn {
 	public void setPointsToMantainStatus(String pointsToManatinStatus) {
 		
 	}
+	
+	public String getPointsToApproach() {
+		return "";
+	}
+
+	public void setPointsToApproach(String pointsToApproach) {
+		
+	}
 
 	
 

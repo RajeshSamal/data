@@ -221,6 +221,13 @@ public class HKAchievePlatinum implements CommonModel,CommonDBColumn {
 	public void setPointsToMantainStatus(String pointsToManatinStatus) {
 		
 	}
+	public String getPointsToApproach() {
+		return "";
+	}
+
+	public void setPointsToApproach(String pointsToApproach) {
+		
+	}
 
 	@Override
 	public boolean equals(Object other) {

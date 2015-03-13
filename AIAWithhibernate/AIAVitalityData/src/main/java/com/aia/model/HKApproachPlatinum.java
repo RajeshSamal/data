@@ -43,7 +43,7 @@ public class HKApproachPlatinum implements CommonModel,CommonDBColumn {
 	private String expiryDate;
 	@Column(name = "SMOKER_IND")
 	private String smokerInd;
-	@Column(name = "POINTS_TO_SILVER")
+	@Column(name = "POINTS_TO_PLATINUM")
 	private String pointsToApproach;
 	@Column(name = "RECORD_STATUS")
 	private String recordStatus;

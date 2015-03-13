@@ -25,8 +25,37 @@ public class CDODetails extends AbstractBaseModel<CDODetails> implements Seriali
 	private String emailAddress;
 	private String memberSurname;
 	private String memberFirstName;
+	private String memeberExpiryDate;
+	private String pointsToMantain;
+	private String smokerInd;
+	private String pointsToApproach;
 	
 	
+	
+	public String getPointsToMantain() {
+		return pointsToMantain;
+	}
+	public void setPointsToMantain(String pointsToMantain) {
+		this.pointsToMantain = pointsToMantain;
+	}
+	public String getSmokerInd() {
+		return smokerInd;
+	}
+	public void setSmokerInd(String smokerInd) {
+		this.smokerInd = smokerInd;
+	}
+	public String getPointsToApproach() {
+		return pointsToApproach;
+	}
+	public void setPointsToApproach(String pointsToApproach) {
+		this.pointsToApproach = pointsToApproach;
+	}
+	public String getMemeberExpiryDate() {
+		return memeberExpiryDate;
+	}
+	public void setMemeberExpiryDate(String memeberExpiryDate) {
+		this.memeberExpiryDate = memeberExpiryDate;
+	}
 	public String getLanguagePreference() {
 		return languagePreference;
 	}

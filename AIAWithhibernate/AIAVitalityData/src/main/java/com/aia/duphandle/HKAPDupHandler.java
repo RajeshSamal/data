@@ -13,7 +13,7 @@ public class HKAPDupHandler {
 	
 	
 	
-	public static List<HKAchievePlatinum> handleDuplicateHKAP(List<HKAchievePlatinum> objectList){
+	public static List<HKAchievePlatinum> handleDuplicate(List<HKAchievePlatinum> objectList){
 		
 		List<HKAchievePlatinum> existingDuplicates = ((HkapDAO)(DataInputProcessor.getDao(Constants.HK_PLATINUM_ARCHIVE))).getListAsStatus(Constants.RECORD_DUPLICATE);
 		List<HKAchievePlatinum> existingToBeSave = ((HkapDAO)(DataInputProcessor.getDao(Constants.HK_PLATINUM_ARCHIVE))).getListAsStatus(Constants.RECORD_SAVED);

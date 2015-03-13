@@ -16,11 +16,17 @@ import com.aia.dao.DbConnectionFactory;
 import com.aia.duphandle.HKER1DupHandler;
 import com.aia.eloqua.process.HKAGProcess;
 import com.aia.eloqua.send.HKAGSend;
+import com.aia.eloqua.send.HKAMCRSend;
+import com.aia.eloqua.send.HKAPGSend;
+import com.aia.eloqua.send.HKAPPSend;
+import com.aia.eloqua.send.HKAPSSend;
 import com.aia.eloqua.send.HKAPSend;
 import com.aia.eloqua.send.HKASSend;
+import com.aia.eloqua.send.HKDWSend;
 import com.aia.eloqua.send.HKER1Send;
 import com.aia.eloqua.send.HKER2Send;
 import com.aia.eloqua.send.HKER3Send;
+import com.aia.eloqua.send.HKMYASend;
 import com.aia.model.CDODetails;
 import com.aia.model.CommonModel;
 import com.aia.model.HKAchieveGold;
@@ -50,6 +56,24 @@ public class DataOutputProcessor {
 		else if (fileClass.getName().equalsIgnoreCase("com.aia.model.HKEngagementReminder3")) {
 			HKER3Send.sendToElqua();
 		}
+		else if (fileClass.getName().equalsIgnoreCase("com.aia.model.HKAdidasMicConRem")) {
+			HKAMCRSend.sendToElqua();
+		}
+		else if (fileClass.getName().equalsIgnoreCase("com.aia.model.HKMidYearAssessment")) {
+			HKMYASend.sendToElqua();
+		}
+		else if (fileClass.getName().equalsIgnoreCase("com.aia.model.HKDowngradeWarning")) {
+			HKDWSend.sendToElqua();
+		}
+		else if (fileClass.getName().equalsIgnoreCase("com.aia.model.HKApproachGold")) {
+			HKAPGSend.sendToElqua();
+		}
+		else if (fileClass.getName().equalsIgnoreCase("com.aia.model.HKAchieveSilver")) {
+			HKAPSSend.sendToElqua();
+		}
+		else if (fileClass.getName().equalsIgnoreCase("com.aia.model.HKApproachPlatinum")) {
+			HKAPPSend.sendToElqua();
+		}
 
 	}
 
@@ -73,6 +97,24 @@ public class DataOutputProcessor {
 		}
 		else if (fileClass.getName().equalsIgnoreCase("com.aia.model.HKEngagementReminder3")) {
 			HKER3Send.sendDistinctDuplicateToElqua();
+		}
+		else if (fileClass.getName().equalsIgnoreCase("com.aia.model.HKAdidasMicConRem")) {
+			HKAMCRSend.sendDistinctDuplicateToElqua();
+		}
+		else if (fileClass.getName().equalsIgnoreCase("com.aia.model.HKMidYearAssessment")) {
+			HKMYASend.sendDistinctDuplicateToElqua();
+		}
+		else if (fileClass.getName().equalsIgnoreCase("com.aia.model.HKDowngradeWarning")) {
+			HKDWSend.sendDistinctDuplicateToElqua();
+		}
+		else if (fileClass.getName().equalsIgnoreCase("com.aia.model.HKApproachGold")) {
+			HKAPGSend.sendDistinctDuplicateToElqua();
+		}
+		else if (fileClass.getName().equalsIgnoreCase("com.aia.model.HKAchieveSilver")) {
+			HKAPSSend.sendDistinctDuplicateToElqua();
+		}
+		else if (fileClass.getName().equalsIgnoreCase("com.aia.model.HKApproachPlatinum")) {
+			HKAPPSend.sendDistinctDuplicateToElqua();
 		}
 
 	}

@@ -13,7 +13,7 @@ public class HKER2DupHandler {
 	
 	
 	
-	public static List<HKEngagementReminder2> handleDuplicateHKER2(List<HKEngagementReminder2> objectList){
+	public static List<HKEngagementReminder2> handleDuplicate(List<HKEngagementReminder2> objectList){
 		
 		List<HKEngagementReminder2> existingDuplicates = ((Hker2DAO)(DataInputProcessor.getDao(Constants.HK_ENGAGEMENT_REMINDER2))).getListAsStatus(Constants.RECORD_DUPLICATE);
 		List<HKEngagementReminder2> existingToBeSave = ((Hker2DAO)(DataInputProcessor.getDao(Constants.HK_ENGAGEMENT_REMINDER2))).getListAsStatus(Constants.RECORD_SAVED);

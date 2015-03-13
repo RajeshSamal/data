@@ -13,7 +13,7 @@ public class HKAGDupHandler {
 	
 	
 	
-	public static List<HKAchieveGold> handleDuplicateHKAG(List<HKAchieveGold> objectList){
+	public static List<HKAchieveGold> handleDuplicate(List<HKAchieveGold> objectList){
 		
 		List<HKAchieveGold> existingDuplicates = ((HkagDAO)(DataInputProcessor.getDao(Constants.HK_GOLD_ARCHIVE))).getListAsStatus(Constants.RECORD_DUPLICATE);
 		List<HKAchieveGold> existingToBeSave = ((HkagDAO)(DataInputProcessor.getDao(Constants.HK_GOLD_ARCHIVE))).getListAsStatus(Constants.RECORD_SAVED);

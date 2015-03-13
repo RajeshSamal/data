@@ -21,11 +21,17 @@ import com.aia.dao.CustomObjectDao;
 import com.aia.dao.EloquaDao;
 import com.aia.data.DataInputProcessor;
 import com.aia.eloqua.process.HKAGProcess;
+import com.aia.eloqua.process.HKAMCRProcess;
+import com.aia.eloqua.process.HKAPGProcess;
+import com.aia.eloqua.process.HKAPPProcess;
 import com.aia.eloqua.process.HKAPProcess;
+import com.aia.eloqua.process.HKAPSProcess;
 import com.aia.eloqua.process.HKASProcess;
+import com.aia.eloqua.process.HKDWProcess;
 import com.aia.eloqua.process.HKER1Process;
 import com.aia.eloqua.process.HKER2Process;
 import com.aia.eloqua.process.HKER3Process;
+import com.aia.eloqua.process.HKMYAProcess;
 import com.aia.model.CDODetails;
 import com.aia.model.Eloqua;
 
@@ -79,6 +85,30 @@ public class AIAService {
 					importFields = HKER3Process.importFields;
 					
 				}
+				else if(fileType.equals(Constants.HK_ADIDAS_MICOACH_CONCENT_REMINDER)){
+					importFields = HKAMCRProcess.importFields;
+					
+				}
+				else if(fileType.equals(Constants.HK_DOWNGRADE_WARNING)){
+					importFields = HKDWProcess.importFields;
+					
+				}
+				else if(fileType.equals(Constants.HK_MID_YEAR_ASSESSMENT)){
+					importFields = HKMYAProcess.importFields;
+					
+				}
+				else if(fileType.equals(Constants.HK_APPROACH_GOLD)){
+					importFields = HKAPGProcess.importFields;
+					
+				}
+				else if(fileType.equals(Constants.HK_APPROACH_PLATINUM)){
+					importFields = HKAPPProcess.importFields;
+					
+				}
+				else if(fileType.equals(Constants.HK_APPROACH_SILVER)){
+					importFields = HKAPSProcess.importFields;
+					
+				}
 				
 				Import importStruc = cdoHelper.createImportStructure(
 						custObjectId, importFields);
@@ -108,6 +138,27 @@ public class AIAService {
 					else if(fileType.equals(Constants.HK_ENGAGEMENT_REMINDER3)){
 						cdoDataList = HKER3Process.getCDOList(cdoDetailsList);
 						
+					}
+					
+					else if(fileType.equals(Constants.HK_ADIDAS_MICOACH_CONCENT_REMINDER)){
+						cdoDataList = HKAMCRProcess.getCDOList(cdoDetailsList);
+						
+					}
+					else if(fileType.equals(Constants.HK_DOWNGRADE_WARNING)){
+						cdoDataList = HKDWProcess.getCDOList(cdoDetailsList);
+						
+					}
+					else if(fileType.equals(Constants.HK_MID_YEAR_ASSESSMENT)){
+						cdoDataList = HKMYAProcess.getCDOList(cdoDetailsList);
+					}
+					else if(fileType.equals(Constants.HK_APPROACH_GOLD)){
+						cdoDataList = HKAPGProcess.getCDOList(cdoDetailsList);
+					}
+					else if(fileType.equals(Constants.HK_APPROACH_PLATINUM)){
+						cdoDataList = HKAPPProcess.getCDOList(cdoDetailsList);
+					}
+					else if(fileType.equals(Constants.HK_APPROACH_SILVER)){
+						cdoDataList = HKAPSProcess.getCDOList(cdoDetailsList);
 					}
 
 					if (cdoDataList != null) {

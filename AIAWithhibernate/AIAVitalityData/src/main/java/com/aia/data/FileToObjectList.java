@@ -23,11 +23,17 @@ import com.aia.dao.DataFileDao;
 import com.aia.dao.DbConnectionFactory;
 import com.aia.dao.FTPDao;
 import com.aia.dao.HkagDAO;
+import com.aia.dao.HkamcrDAO;
 import com.aia.dao.HkapDAO;
+import com.aia.dao.HkapgDAO;
+import com.aia.dao.HkappDAO;
+import com.aia.dao.HkapsDAO;
 import com.aia.dao.HkasDAO;
+import com.aia.dao.HkdwDAO;
 import com.aia.dao.Hker1DAO;
 import com.aia.dao.Hker2DAO;
 import com.aia.dao.Hker3DAO;
+import com.aia.dao.HkmyaDAO;
 import com.aia.model.DataFile;
 import com.aia.model.HKAchieveGold;
 
@@ -227,6 +233,24 @@ public class FileToObjectList {
 		}
 		else if (fileClass.getName().equalsIgnoreCase("com.aia.model.HKEngagementReminder3")) {
 			((Hker3DAO)(DataInputProcessor.getDao(Constants.HK_ENGAGEMENT_REMINDER3))).insertList(session, objectList,fileName);
+		}
+		else if (fileClass.getName().equalsIgnoreCase("com.aia.model.HKAdidasMicConRem")) {
+			((HkamcrDAO)(DataInputProcessor.getDao(Constants.HK_ADIDAS_MICOACH_CONCENT_REMINDER))).insertList(session, objectList,fileName);
+		}
+		else if (fileClass.getName().equalsIgnoreCase("com.aia.model.HKMidYearAssessment")) {
+			((HkmyaDAO)(DataInputProcessor.getDao(Constants.HK_MID_YEAR_ASSESSMENT))).insertList(session, objectList,fileName);
+		}
+		else if (fileClass.getName().equalsIgnoreCase("com.aia.model.HKDowngradeWarning")) {
+			((HkdwDAO)(DataInputProcessor.getDao(Constants.HK_DOWNGRADE_WARNING))).insertList(session, objectList,fileName);
+		}
+		else if (fileClass.getName().equalsIgnoreCase("com.aia.model.HKApproachGold")) {
+			((HkapgDAO)(DataInputProcessor.getDao(Constants.HK_APPROACH_GOLD))).insertList(session, objectList,fileName);
+		}
+		else if (fileClass.getName().equalsIgnoreCase("com.aia.model.HKAchieveSilver")) {
+			((HkapsDAO)(DataInputProcessor.getDao(Constants.HK_APPROACH_SILVER))).insertList(session, objectList,fileName);
+		}
+		else if (fileClass.getName().equalsIgnoreCase("com.aia.model.HKApproachPlatinum")) {
+			((HkappDAO)(DataInputProcessor.getDao(Constants.HK_APPROACH_PLATINUM))).insertList(session, objectList,fileName);
 		}
 
 	}

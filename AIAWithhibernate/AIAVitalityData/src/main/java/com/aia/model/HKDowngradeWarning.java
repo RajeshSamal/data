@@ -180,6 +180,14 @@ public class HKDowngradeWarning implements CommonModel,CommonDBColumn {
 		this.lastModifiedDate = lastModifiedDate;
 	}
 	
+	public String getPointsToApproach() {
+		return "";
+	}
+
+	public void setPointsToApproach(String pointsToApproach) {
+		
+	}
+	
 	@Override
 	public boolean equals(Object other) {
 		boolean result = false;

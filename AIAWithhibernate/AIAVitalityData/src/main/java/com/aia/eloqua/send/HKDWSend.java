@@ -14,6 +14,7 @@ import com.aia.dao.DataFileDao;
 import com.aia.dao.DbConnectionFactory;
 import com.aia.dao.HkdwDAO;
 import com.aia.data.DataInputProcessor;
+import com.aia.eloqua.process.HKDWProcess;
 import com.aia.model.CDODetails;
 import com.aia.model.DataFile;
 import com.aia.model.HKDowngradeWarning;
@@ -99,7 +100,7 @@ public class HKDWSend {
 				HKDW = (HKDowngradeWarning) objectList.get(i);
 				//comment: below status change may not require.
 				//HKAG.setRecordStatus(Constants.RECORD_SENT);
-				CDODetails cdoData = HKDW.process(HKDW);
+				CDODetails cdoData = HKDWProcess.process(HKDW);
 				cdoDetailsList.add(cdoData);
 			}
 			int status = AIAService.syncDataToEloqua(cdoDetailsList, fileType);

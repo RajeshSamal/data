@@ -240,6 +240,15 @@ public class HKAchieveGold implements CommonModel,CommonDBColumn {
 		    return emailAddress.toLowerCase().hashCode();
 		  }
 
+	
+	public String getPointsToApproach() {
+		return "";
+	}
+
+	public void setPointsToApproach(String pointsToApproach) {
+		
+	}
+
 
 
 }
