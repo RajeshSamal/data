@@ -246,7 +246,7 @@ public class FileToObjectList {
 		else if (fileClass.getName().equalsIgnoreCase("com.aia.model.HKApproachGold")) {
 			((HkapgDAO)(DataInputProcessor.getDao(Constants.HK_APPROACH_GOLD))).insertList(session, objectList,fileName);
 		}
-		else if (fileClass.getName().equalsIgnoreCase("com.aia.model.HKAchieveSilver")) {
+		else if (fileClass.getName().equalsIgnoreCase("com.aia.model.HKApproachSilver")) {
 			((HkapsDAO)(DataInputProcessor.getDao(Constants.HK_APPROACH_SILVER))).insertList(session, objectList,fileName);
 		}
 		else if (fileClass.getName().equalsIgnoreCase("com.aia.model.HKApproachPlatinum")) {

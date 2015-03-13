@@ -37,6 +37,13 @@
 <mapping class="com.aia.model.HKEngagementReminder1" />
 <mapping class="com.aia.model.HKEngagementReminder2" />
 <mapping class="com.aia.model.HKEngagementReminder3" />
+
+<mapping class="com.aia.model.HKMidYearAssessment" />
+<mapping class="com.aia.model.HKAdidasMicConRem" />
+<mapping class="com.aia.model.HKDowngradeWarning" />
+<mapping class="com.aia.model.HKApproachGold" />
+<mapping class="com.aia.model.HKApproachPlatinum" />
+<mapping class="com.aia.model.HKApproachSilver" />
 <mapping class="com.aia.model.DataFile" />
 <mapping class="com.aia.model.FTP" />
 <mapping class="com.aia.model.Eloqua" />

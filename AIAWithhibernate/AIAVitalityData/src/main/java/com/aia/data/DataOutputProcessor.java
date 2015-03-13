@@ -68,7 +68,7 @@ public class DataOutputProcessor {
 		else if (fileClass.getName().equalsIgnoreCase("com.aia.model.HKApproachGold")) {
 			HKAPGSend.sendToElqua();
 		}
-		else if (fileClass.getName().equalsIgnoreCase("com.aia.model.HKAchieveSilver")) {
+		else if (fileClass.getName().equalsIgnoreCase("com.aia.model.HKApproachSilver")) {
 			HKAPSSend.sendToElqua();
 		}
 		else if (fileClass.getName().equalsIgnoreCase("com.aia.model.HKApproachPlatinum")) {
@@ -110,7 +110,7 @@ public class DataOutputProcessor {
 		else if (fileClass.getName().equalsIgnoreCase("com.aia.model.HKApproachGold")) {
 			HKAPGSend.sendDistinctDuplicateToElqua();
 		}
-		else if (fileClass.getName().equalsIgnoreCase("com.aia.model.HKAchieveSilver")) {
+		else if (fileClass.getName().equalsIgnoreCase("com.aia.model.HKApproachSilver")) {
 			HKAPSSend.sendDistinctDuplicateToElqua();
 		}
 		else if (fileClass.getName().equalsIgnoreCase("com.aia.model.HKApproachPlatinum")) {

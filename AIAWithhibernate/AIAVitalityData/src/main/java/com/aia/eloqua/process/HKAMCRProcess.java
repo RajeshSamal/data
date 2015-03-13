@@ -22,7 +22,7 @@ public class HKAMCRProcess {
 		String fileType= Constants.HK_ADIDAS_MICOACH_CONCENT_REMINDER;
 		String custObjectId = dao.getCustomObjectId(fileType);
 		String languagePrefernceID = dao.getCustomFieldId(fileType, "LANGUAGE_PREFERENCE1");
-		String vitalityStatusID = dao.getCustomFieldId(fileType, "VITALITY_STATUS1");
+		String vitalityStatusID = dao.getCustomFieldId(fileType, "CLIENT_ID1");
 		String EntityReferenceID = dao.getCustomFieldId(fileType, "ENTITY_REFERENCE_NUMBER1");
 		String aiaVitalityNumberID = dao.getCustomFieldId(fileType, "AIA_VITALITY_MEMBER_NUMBER1");
 		String emailAddressID = dao.getCustomFieldId(fileType, "EMAIL_ADDRESS1");
@@ -32,7 +32,7 @@ public class HKAMCRProcess {
 		importFields.put("LANGUAGE_PREFERENCE1", "{{CustomObject["
 				+ custObjectId + "].Field[" + languagePrefernceID+ "]}}");
 		
-		importFields.put("VITALITY_STATUS1", "{{CustomObject["
+		importFields.put("CLIENT_ID1", "{{CustomObject["
 				+ custObjectId + "].Field["+vitalityStatusID+"]}}");
 		
 		importFields.put("ENTITY_REFERENCE_NUMBER1", "{{CustomObject["

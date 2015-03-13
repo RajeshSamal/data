@@ -58,7 +58,7 @@ public class HandleDuplicates {
 		else if (fileClass.getName().equalsIgnoreCase("com.aia.model.HKApproachGold")) {
 			objectList = HKAPGDupHandler.handleDuplicate(objectList);
 		}
-		else if (fileClass.getName().equalsIgnoreCase("com.aia.model.HKAchieveSilver")) {
+		else if (fileClass.getName().equalsIgnoreCase("com.aia.model.HKApproachSilver")) {
 			objectList = HKAPSDupHandler.handleDuplicate(objectList);
 		}
 		else if (fileClass.getName().equalsIgnoreCase("com.aia.model.HKApproachPlatinum")) {

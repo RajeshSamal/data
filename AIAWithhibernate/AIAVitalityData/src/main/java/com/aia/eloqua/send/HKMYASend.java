@@ -15,6 +15,7 @@ import com.aia.dao.DbConnectionFactory;
 import com.aia.dao.HkmyaDAO;
 import com.aia.data.DataInputProcessor;
 import com.aia.eloqua.process.HKAMCRProcess;
+import com.aia.eloqua.process.HKMYAProcess;
 import com.aia.model.CDODetails;
 import com.aia.model.DataFile;
 import com.aia.model.HKMidYearAssessment;
@@ -48,7 +49,7 @@ public class HKMYASend {
 				HKMYA = list.get(i);
 				//comment: below status change may not require.
 				//HKAG.setRecordStatus(Constants.RECORD_SENT);
-				CDODetails cdoData = HKAMCRProcess.process(HKMYA);
+				CDODetails cdoData = HKMYAProcess.process(HKMYA);
 				cdoDetailsList.add(cdoData);
 			}
 			int status = AIAService.syncDataToEloqua(cdoDetailsList, fileType);
@@ -100,7 +101,7 @@ public class HKMYASend {
 				HKMYA = (HKMidYearAssessment) objectList.get(i);
 				//comment: below status change may not require.
 				//HKAG.setRecordStatus(Constants.RECORD_SENT);
-				CDODetails cdoData = HKAMCRProcess.process(HKMYA);
+				CDODetails cdoData = HKMYAProcess.process(HKMYA);
 				cdoDetailsList.add(cdoData);
 			}
 			int status = AIAService.syncDataToEloqua(cdoDetailsList, fileType);

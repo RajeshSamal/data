@@ -7,20 +7,20 @@ import com.aia.common.utils.Constants;
 import com.aia.dao.HkmyaDAO;
 import com.aia.data.DataInputProcessor;
 import com.aia.data.HandleDuplicates;
-import com.aia.model.HKDowngradeWarning;;
+import com.aia.model.HKMidYearAssessment;
 
 public class HKMYADupHandler {
 	
 	
 	
-	public static List<HKDowngradeWarning> handleDuplicate(List<HKDowngradeWarning> objectList){
+	public static List<HKMidYearAssessment> handleDuplicate(List<HKMidYearAssessment> objectList){
 		
-		List<HKDowngradeWarning> existingDuplicates = ((HkmyaDAO)(DataInputProcessor.getDao(Constants.HK_MID_YEAR_ASSESSMENT))).getListAsStatus(Constants.RECORD_DUPLICATE);
-		List<HKDowngradeWarning> existingToBeSave = ((HkmyaDAO)(DataInputProcessor.getDao(Constants.HK_MID_YEAR_ASSESSMENT))).getListAsStatus(Constants.RECORD_SAVED);
-		List<HKDowngradeWarning> statusWithSave = new ArrayList<HKDowngradeWarning>();
-		List<HKDowngradeWarning> safeToSave = new ArrayList<HKDowngradeWarning>();
+		List<HKMidYearAssessment> existingDuplicates = ((HkmyaDAO)(DataInputProcessor.getDao(Constants.HK_MID_YEAR_ASSESSMENT))).getListAsStatus(Constants.RECORD_DUPLICATE);
+		List<HKMidYearAssessment> existingToBeSave = ((HkmyaDAO)(DataInputProcessor.getDao(Constants.HK_MID_YEAR_ASSESSMENT))).getListAsStatus(Constants.RECORD_SAVED);
+		List<HKMidYearAssessment> statusWithSave = new ArrayList<HKMidYearAssessment>();
+		List<HKMidYearAssessment> safeToSave = new ArrayList<HKMidYearAssessment>();
 		
-		for(HKDowngradeWarning object : objectList){
+		for(HKMidYearAssessment object : objectList){
 			if(existingDuplicates != null && existingDuplicates.contains(object)){
 				object.setRecordStatus(Constants.RECORD_DUPLICATE);
 				safeToSave.add(object);

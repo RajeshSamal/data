@@ -25,7 +25,7 @@ public class HKMYAProcess {
 		String clientID = dao.getCustomFieldId(fileType, "CLIENT_ID1");
 		String pointsBalanceID = dao.getCustomFieldId(fileType, "POINTS_BALANCE1");
 		String vitalityStatusID = dao.getCustomFieldId(fileType, "VITALITY_STATUS1");
-		String memberExpiryDateID = dao.getCustomFieldId(fileType, "MEMBER_EXPIRY_DATE");
+		String memberExpiryDateID = dao.getCustomFieldId(fileType, "MEMBER_EXPIRY_DATE1");
 		String EntityReferenceID = dao.getCustomFieldId(fileType, "ENTITY_REFERENCE_NUMBER1");
 		String aiaVitalityNumberID = dao.getCustomFieldId(fileType, "AIA_VITALITY_MEMBER_NUMBER1");
 		String emailAddressID = dao.getCustomFieldId(fileType, "EMAIL_ADDRESS1");

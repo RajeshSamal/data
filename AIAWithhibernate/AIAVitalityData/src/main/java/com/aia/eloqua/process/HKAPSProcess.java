@@ -23,7 +23,7 @@ public class HKAPSProcess {
 		String custObjectId = dao.getCustomObjectId(fileType);
 		String languagePrefernceID = dao.getCustomFieldId(fileType, "LANGUAGE_PREFERENCE1");
 		String clientID = dao.getCustomFieldId(fileType, "CLIENT_ID1");
-		String memberExpiryDateID = dao.getCustomFieldId(fileType, "MEMBER_EXPIRY_DATE");
+		String memberExpiryDateID = dao.getCustomFieldId(fileType, "MEMBER_EXPIRY_DATE1");
 		String smokerIndId = dao.getCustomFieldId(fileType, "SMOKER_IND1");
 		String genderID = dao.getCustomFieldId(fileType, "GENDER1");
 		String pointsToApproachId = dao.getCustomFieldId(fileType, "POINTS_TO_SILVER1");

@@ -157,6 +157,9 @@ public class DataInputProcessor {
 		else if(daoName != null && daoName.equals(Constants.CUSTOM)){
 			return new CustomObjectDao();
 		}
+		else if(daoName != null && daoName.equals(Constants.ELOQUA)){
+			return new EloquaDao();
+		}
 		return null;
 	}
 

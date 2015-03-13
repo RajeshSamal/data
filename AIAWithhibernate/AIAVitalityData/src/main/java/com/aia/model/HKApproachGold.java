@@ -197,8 +197,8 @@ public class HKApproachGold implements CommonModel,CommonDBColumn {
 	@Override
 	public boolean equals(Object other) {
 		boolean result = false;
-		if (other instanceof HKDowngradeWarning) {
-			HKDowngradeWarning that = (HKDowngradeWarning) other;
+		if (other instanceof HKApproachGold) {
+			HKApproachGold that = (HKApproachGold) other;
 			if(this.getEmailAddress() !=null){
 				result = (this.getEmailAddress().equalsIgnoreCase(that
 						.getEmailAddress()));
