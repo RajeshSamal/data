@@ -285,7 +285,7 @@ public class FileToObjectList {
 			} catch (Exception e) {
 				tx.rollback();
 			} finally {
-				if (listOfFiles[i].isFile() && session!=null) {
+				if (listOfFiles[i].isFile() && session!=null && session.isOpen()) {
 					session.close();
 				}
 

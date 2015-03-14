@@ -50,7 +50,8 @@ public class HKAMCRProcess {
 		importFields.put("MEMBER_FIRST_NAMES1", "{{CustomObject["
 				+ custObjectId + "].Field["+memberFirstNameID+"]}}");
 		
-		
+		importFields.put("EmailAddressField", "{{CustomObject[" + custObjectId
+				+ "].Contact.Field(C_EmailAddress)}}");
 		
 		
 	}
@@ -94,6 +95,7 @@ public class HKAMCRProcess {
 			cdoData.put("AIA_VITALITY_MEMBER_NUMBER1",
 					cdoDetail.getAiaVitalityMemberNumber());
 			cdoData.put("EMAIL_ADDRESS1", cdoDetail.getEmailAddress());
+			cdoData.put("EmailAddressField", cdoDetail.getEmailAddress());
 			cdoData.put("MEMBER_SURNAME1", cdoDetail.getMemberSurname());
 			cdoData.put("MEMBER_FIRST_NAMES1", cdoDetail.getMemberFirstName());
 

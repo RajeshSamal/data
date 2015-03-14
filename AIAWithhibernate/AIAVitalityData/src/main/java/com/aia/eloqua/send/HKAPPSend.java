@@ -91,7 +91,7 @@ public class HKAPPSend {
 			String fileType = null;
 			session = sqlSessionFactory.openSession();
 			tx = session.beginTransaction();
-			fileType = Constants.HK_APPROACH_GOLD;
+			fileType = Constants.HK_APPROACH_PLATINUM;
 			List<HKApproachPlatinum> objectList = ((HkappDAO)(DataInputProcessor.getDao(Constants.HK_APPROACH_PLATINUM)))
 					.getListAsStatus(Constants.RECORD_SAVED);
 
